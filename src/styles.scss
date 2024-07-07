@@ -1,1 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+/* Add application styles & imports to this file! */
+@import '~font-awesome/css/font-awesome.css';
+@import '~bootstrap/dist/css/bootstrap.min.css';
+/* Google Fonts Import Link */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+.text-sidebar {
+  font-size: 30px;
+  font-weight: 600;
+  color: #25f9f5;
+  padding-bottom: 10px;
+}
+
+ul {
+  padding: 0;
+}
