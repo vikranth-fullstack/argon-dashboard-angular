@@ -1,0 +1,60 @@
+.avatar-wrapper {
+    text-align: center;
+  }
+  
+  .avatar {
+    width: 200px; /* Adjust size as needed */
+    height: 200px; /* Adjust size as needed */
+    border-radius: 50%; /* Ensure it's a circle */
+    overflow: hidden;
+    background-color: #f0f0f0; /* Placeholder color */
+    margin: 0 auto; /* Center horizontally */
+    position: relative; /* Ensure position-relative for children */
+  }
+  
+  .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Maintain aspect ratio */
+  }
+  
+  .default-avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-size: 48px; /* Adjust font size as needed */
+    color: #757575; /* Adjust color as needed */
+  }
+  
+  /* Position the file input below the avatar */
+  .avatar input[type="file"] {
+    position: absolute;
+    bottom: -10px; /* Adjust to position it properly */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  /* Camera icon */
+  .camera-icon {
+    position: absolute;
+    bottom: 47px; /* Adjust vertical position */
+    right: 13px; /* Adjust horizontal position */
+    background-color: rgba(10, 1, 1, 0.989); /* Adjust background color and opacity */
+    padding: 5px; /* Adjust padding as needed */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .camera-icon .material-icons {
+    font-size: 18px; /* Adjust icon size */
+    color: #333; /* Adjust icon color */
+
+  }
+  

@@ -1,82 +1,205 @@
-<div class="header bg-gradient-danger py-7 py-lg-8">
-  <div class="container">
-    <div class="header-body text-center mb-7">
-      <div class="row justify-content-center">
-        <div class="col-lg-5 col-md-6">
-          <h1 class="text-white">Welcome!</h1>
-          <p class="text-lead text-light">Use these awesome forms to login or create new account in your project for free.</p>
-        </div>
-      </div>
+<h1>Add Student</h1>
+<!-- <form class="add">
+  <label for="name">Name</label>
+  <input type="text" name="name" required [(ngModel)]="studentDetails.name" />
+
+  <label for="age">Age</label>
+  <input type="text" name="age" required [(ngModel)]="studentDetails.age" />
+
+  <button type="button" (click)="add()">Add</button>
+</form>
+<br>
+<br> -->
+
+<div class="show">
+  <ng-container *ngFor="let student of studentCollectiondata">
+    <div>
+      <label for="name-show">Name</label>
+      <input type="text" name="name-show" [value]="student.name" required #name>
+
+      <label for="age-show">Age</label>
+      <input type="text" name="age-show" [value]="student.age" required #age>
+
+      <button type="button" (click)="delete(student.id)">Delete</button>
+      <button type="button" (click)="update(student.id, name, age)">Update</button>
     </div>
-  </div>
-  <div class="separator separator-bottom separator-skew zindex-100">
-    <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
-      <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
-    </svg>
-  </div>
+    <br>
+  </ng-container>
 </div>
-<!-- Page content -->
-<div class="container mt--8 pb-5">
-  <!-- Table -->
-  <div class="row justify-content-center">
-    <div class="col-lg-6 col-md-8">
-      <div class="card bg-secondary shadow border-0">
-        <div class="card-header bg-transparent pb-5">
-          <div class="text-muted text-center mt-2 mb-4"><small>Sign up with</small></div>
-          <div class="text-center">
-            <a href="javascript:void(0)" class="btn btn-neutral btn-icon mr-4">
-              <span class="btn-inner--icon"><img src="assets/img/icons/common/github.svg"></span>
-              <span class="btn-inner--text">Github</span>
-            </a>
-            <a href="javascript:void(0)" class="btn btn-neutral btn-icon">
-              <span class="btn-inner--icon"><img src="assets/img/icons/common/google.svg"></span>
-              <span class="btn-inner--text">Google</span>
-            </a>
+<br><br><br><br><br><br>
+
+<div class="mt--1">
+  <div class="row">
+
+    <div class="col-xl-12 order-xl-1">
+      <div class="">
+      
+
+
+        
+        <div class="">
+
+
+          <div class="text-center mb-3">
+            <!-- Avatar section -->
+            <div class="avatar-wrapper">
+              <div class="avatar rounded-circle overflow-hidden position-relative">
+                <img *ngIf="imageUrl; else defaultAvatar" [src]="imageUrl" class="img-fluid" alt="Avatar">
+                <ng-template #defaultAvatar>
+                  <div class="default-avatar d-flex justify-content-center align-items-center text-secondary bg-light">
+                    <span class="material-icons">Brand logo </span> <!-- Change to your preferred icon or text -->
+                  </div>
+                </ng-template>
+                <div class="camera-icon">
+                  <i class="fa fa-solid fa-camera"></i>
+                </div>
+                <input type="file" (change)="onFileSelected($event)" accept="image/*" class="position-absolute top-0 start-0 translate-middle btn btn-sm btn-light">
+                
+              </div>
+            </div>
+            <!-- End Avatar section -->
           </div>
-        </div>
-        <div class="card-body px-lg-5 py-lg-5">
-          <div class="text-center text-muted mb-4">
-            <small>Or sign up with credentials</small>
-          </div>
-          <form role="form">
-            <div class="form-group">
-              <div class="input-group input-group-alternative mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+
+          
+          <form  [formGroup]="businessForm" (ngSubmit)="submitForm()">
+            
+            <div class="pl-lg-4">
+              
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-username">Businee Name</label>
+                    <input type="text" id="input-username" class="form-control form-control-alternative"
+                      formControlName="businessName" placeholder="Business Name" value="lucky.jesse">
+                  </div>
                 </div>
-                <input class="form-control" placeholder="Name" type="text">
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="input-group input-group-alternative mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="ni ni-email-83"></i></span>
-                </div>
-                <input class="form-control" placeholder="Email" type="email">
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="input-group input-group-alternative">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                </div>
-                <input class="form-control" placeholder="Password" type="password">
-              </div>
-            </div>
-            <div class="text-muted font-italic"><small>password strength: <span class="text-success font-weight-700">strong</span></small></div>
-            <div class="row my-4">
-              <div class="col-12">
-                <div class="custom-control custom-control-alternative custom-checkbox">
-                  <input class="custom-control-input" id="customCheckRegister" type="checkbox">
-                  <label class="custom-control-label" for="customCheckRegister">
-                    <span class="text-muted">I agree with the <a href="#!">Privacy Policy</a></span>
-                  </label>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-email">Business Category</label>
+                    <select id="business-category" class="form-control form-control-alternative" [(ngModel)]="selectedCategory">
+                      <option value="">Select Category</option>
+                      <option *ngFor="let category of busineeCategoryCollectiondata" [value]="category.id">{{ category.name }}</option>
+                    </select>
+                  </div>
                 </div>
               </div>
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-first-name">Business Description</label>
+                    <textarea id="input-business-description" class="form-control form-control-alternative"
+                      rows="3" placeholder="Business Description">{{ businessDescription }}</textarea>
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-last-name">Store Timings</label>
+                    <input type="text" id="input-last-name" class="form-control form-control-alternative"
+                      placeholder="Last name" value="Jesse">
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-last-name">Business Email Address</label>
+                    <input required type="email" id="businessEmail" class="form-control form-control-alternative"
+                      formControlName="businessEmail" placeholder="Business Email Address">
+                      <div style="color: red;" *ngIf="businessForm.get('businessEmail').invalid && (businessForm.get('businessEmail').dirty || businessForm.get('businessEmail').touched)">
+
+                      <div *ngIf="businessForm.get('businessEmail').errors?.email">Invalid email.</div>
+                      <div *ngIf="businessForm.get('businessEmail').errors?.required">Email is required.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-last-name">Business Website URL</label>
+                    <input type="text" id="input-last-name" class="form-control form-control-alternative"
+                      placeholder="Last name" value="Jesse">
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-last-name">GST</label>
+                    <input type="text" id="input-last-name" class="form-control form-control-alternative"
+                      placeholder="Last name" value="Jesse">
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-last-name">Business Location</label>
+                    <input type="text" id="input-last-name" class="form-control form-control-alternative"
+                      placeholder="Last name" value="Jesse">
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-last-name">Are you the owner/manager of this
+                      business</label>
+                    <input type="text" id="input-last-name" class="form-control form-control-alternative"
+                      placeholder="Last name" value="Jesse">
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-last-name">Name</label>
+                    <input type="text" id="input-last-name" class="form-control form-control-alternative"
+                      placeholder="Last name" value="Jesse">
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-last-name">Mobile Number</label>
+                    <input type="text" id="input-last-name" class="form-control form-control-alternative"
+                      placeholder="Last name" value="Jesse">
+                  </div>
+                </div>
+
+              </div>
+
+
+              <div class="row">
+
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-last-name">I accept the terms and conditions as well as
+                      Privacy Policy </label>
+                    <input type="text" id="input-last-name" class="form-control form-control-alternative"
+                      placeholder="Last name" value="Jesse">
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                </div>
+              </div>
+            
             </div>
-            <div class="text-center">
-              <button type="button" class="btn btn-primary mt-4">Create account</button>
-            </div>
+
+
+
           </form>
         </div>
       </div>

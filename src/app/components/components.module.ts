@@ -5,7 +5,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 
 //vikranth updated
 
@@ -14,7 +15,7 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     RouterModule,
     NgbModule,
-    FormsModule
+    FormsModule,
   ],
   declarations: [
     FooterComponent,
@@ -24,7 +25,8 @@ import { FormsModule } from '@angular/forms';
   exports: [
     FooterComponent,
     NavbarComponent,
-    SidebarComponent
+    SidebarComponent,
+
   ]
 })
 export class ComponentsModule { }

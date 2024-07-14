@@ -107,7 +107,7 @@ export class SidebarComponent implements OnInit {
       sub_menu: [
         {
           link_name: 'New Catalogue',
-          link: '/ui-face',
+          link: '/register',
         },
         {
           link_name: 'New Scratch Card',
