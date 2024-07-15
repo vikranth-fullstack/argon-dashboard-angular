@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DocumentData, QuerySnapshot } from '@firebase/firestore';
 import { FirebaseService } from '../../firebase.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import {
+  CountryISO,  SearchCountryField,PhoneNumberFormat } from "ngx-intl-tel-input";
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -17,8 +18,8 @@ export class RegisterComponent implements OnInit {
   }
   studentCollectiondata: { id: string, name: string, age: string }[] | any = [];
   busineeCategoryCollectiondata: { id: string, name: string, age: string }[] | any = [];
-  selectedCategory: any; // Ensure this matches your business category object structure
-  businessDescription='My business';
+  selectedCategory: any = "0"; // Ensure this matches your business category object structure
+  businessDescription = 'My business';
   businessForm: FormGroup; // Reactive form instance
 
   constructor(private fb: FormBuilder, // FormBuilder for creating reactive forms
@@ -33,25 +34,43 @@ export class RegisterComponent implements OnInit {
       reader.readAsDataURL(file);
     }
   }
+  separateDialCode = false;
+	SearchCountryField = SearchCountryField;
+	CountryISO = CountryISO;
+  PhoneNumberFormat = PhoneNumberFormat;
+	preferredCountries: CountryISO[] = [CountryISO.India];
+
+
   initForm() {
     this.businessForm = this.fb.group({
-      businessName: ['lucky.jesse'], // Default value for business name
-      businessCategory: [''], // Default value for business category
+      businessName: ['', [Validators.required]], // Default value for business name
+      businessCategory: ['undefined', , [Validators.required]], // Default value for business category
       businessDescription: [''], // Default value for business description
       storeTimings: [''], // Default value for store timings
-      businessEmail: ['', [Validators.required, Validators.email]] // Validators for business email
+      businessEmail: ['', [Validators.required, Validators.email]], // Validators for business email,
+      userType: ['', [Validators.required]],
+      mobileNumber: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(10) ]],
+      userName: ['', [Validators.required]],
+      // Accept Terms checkbox
+      acceptTerms: [false, Validators.requiredTrue]
     });
   }
-  ngOnInit(): void {
+  ngOnInit() {
 
     this.get();
-    this.firebaseService.obsr_UpdatedSnapshot.subscribe((snapshot) => {
+    this.firebaseService?.obsr_UpdatedSnapshot?.subscribe((snapshot) => {
       this.updateStudentCollection(snapshot);
     })
     this.fetchBusinessCategories();
     this.initForm();
+    this.businessForm.patchValue({ businessCategory: '2V27pgnQrigqObYyrzSo' });
   }
-
+  onMobileNumberInput(event: any): void {
+    const input = event.target as HTMLInputElement;
+    const sanitizedValue = input.value.replace(/\D/g, ''); // Remove non-numeric characters
+    input.value = sanitizedValue;
+    this.businessForm.get('mobileNumber').setValue(sanitizedValue); // Update form control value
+  }
   async add() {
     const { name, age } = this.studentDetails;
     await this.firebaseService.addBusiness(name, age);
@@ -83,12 +102,11 @@ export class RegisterComponent implements OnInit {
     const snapshot = await this.firebaseService.getBusinessCategories();
 
     this.busineeCategoryCollectiondata = [];
-    snapshot.docs.forEach((student) => {
+    snapshot?.docs?.forEach((student) => {
       this.busineeCategoryCollectiondata.push({ ...student.data(), id: student.id });
     });
-
   }
-submitForm() {
+  submitForm() {
     if (this.businessForm.valid) {
       console.log(this.businessForm.value); // Replace with your form submission logic
     } else {

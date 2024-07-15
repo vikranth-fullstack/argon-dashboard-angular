@@ -13,6 +13,7 @@ import { UserProfileComponent } from '../../pages/user-profile/user-profile.comp
 import { TablesComponent } from '../../pages/tables/tables.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RegisterComponent } from 'src/app/pages/register/register.component';
+import { NgxIntlTelInputModule } from "ngx-intl-tel-input";
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -23,7 +24,8 @@ import { RegisterComponent } from 'src/app/pages/register/register.component';
     ReactiveFormsModule,
     HttpClientModule,
     NgbModule,
-    ClipboardModule
+    ClipboardModule,
+    NgxIntlTelInputModule
   ],
   declarations: [
     DashboardComponent,
