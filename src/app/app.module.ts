@@ -13,6 +13,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -24,14 +28,14 @@ import { ComponentsModule } from './components/components.module';
     ComponentsModule,
     NgbModule,
     RouterModule,
-    AppRoutingModule
+    AppRoutingModule,AngularFireDatabaseModule,AngularFireStorageModule
   ],
   declarations: [
     AppComponent,
     AdminLayoutComponent,
     AuthLayoutComponent
   ],
-  providers: [],
+  providers: [{ provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig }],
   bootstrap: [AppComponent],
   
 })

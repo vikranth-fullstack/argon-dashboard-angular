@@ -4,6 +4,7 @@ import { FirebaseService } from '../../firebase.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   CountryISO,  SearchCountryField,PhoneNumberFormat } from "ngx-intl-tel-input";
+import { FileUpload } from 'src/app/models/file-upload.model';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -22,9 +23,12 @@ export class RegisterComponent implements OnInit {
   businessDescription = 'My business';
   businessForm: FormGroup; // Reactive form instance
 
-  constructor(private fb: FormBuilder, // FormBuilder for creating reactive forms
-    private firebaseService: FirebaseService) { }
-  onFileSelected(event: any) {
+  selectedFiles?: FileList;
+  currentFileUpload?: FileUpload;
+  percentage = 0;
+
+  constructor(private fb: FormBuilder,private firebaseService: FirebaseService) { }
+  async onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -32,6 +36,24 @@ export class RegisterComponent implements OnInit {
         this.imageUrl = e.target.result;
       };
       reader.readAsDataURL(file);
+
+      //File Upload
+      this.currentFileUpload = new FileUpload(file);
+
+
+      this.firebaseService.pushFileToStorage(this.currentFileUpload).subscribe({
+        next: downloadURL => {
+          debugger;
+          console.log('File uploaded successfully. Download URL:', downloadURL);
+          // Handle further operations (e.g., save download URL to database)
+        },
+        error: error => {
+          console.error('Error uploading file:', error);
+          // Handle error gracefully
+        }
+      });
+
+
     }
   }
   separateDialCode = false;
