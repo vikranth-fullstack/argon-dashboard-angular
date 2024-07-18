@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit {
       this.currentFileUpload = new FileUpload(file);
 
 
-      this.firebaseService.pushFileToStorage(this.currentFileUpload).subscribe({
+      this.firebaseService.pushFileToStorage(this.currentFileUpload,"/business_registration_logos").subscribe({
         next: downloadURL => {
           debugger;
           console.log('File uploaded successfully. Download URL:', downloadURL);
