@@ -3,7 +3,8 @@ import { DocumentData, QuerySnapshot } from '@firebase/firestore';
 import { FirebaseService } from '../../firebase.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
-  CountryISO,  SearchCountryField,PhoneNumberFormat } from "ngx-intl-tel-input";
+  CountryISO, SearchCountryField, PhoneNumberFormat
+} from "ngx-intl-tel-input";
 import { FileUpload } from 'src/app/models/file-upload.model';
 @Component({
   selector: 'app-register',
@@ -27,7 +28,11 @@ export class RegisterComponent implements OnInit {
   currentFileUpload?: FileUpload;
   percentage = 0;
 
-  constructor(private fb: FormBuilder,private firebaseService: FirebaseService) { }
+  days: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+
+
+  constructor(private fb: FormBuilder, private firebaseService: FirebaseService) { }
   async onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {
@@ -41,7 +46,7 @@ export class RegisterComponent implements OnInit {
       this.currentFileUpload = new FileUpload(file);
 
 
-      this.firebaseService.pushFileToStorage(this.currentFileUpload,"/business_registration_logos").subscribe({
+      this.firebaseService.pushFileToStorage(this.currentFileUpload, "/business_registration_logos").subscribe({
         next: downloadURL => {
           debugger;
           console.log('File uploaded successfully. Download URL:', downloadURL);
@@ -57,24 +62,34 @@ export class RegisterComponent implements OnInit {
     }
   }
   separateDialCode = false;
-	SearchCountryField = SearchCountryField;
-	CountryISO = CountryISO;
+  SearchCountryField = SearchCountryField;
+  CountryISO = CountryISO;
   PhoneNumberFormat = PhoneNumberFormat;
-	preferredCountries: CountryISO[] = [CountryISO.India];
+  preferredCountries: CountryISO[] = [CountryISO.India];
 
 
   initForm() {
+
+   
+
+
     this.businessForm = this.fb.group({
       businessName: ['', [Validators.required]], // Default value for business name
       businessCategory: ['undefined', , [Validators.required]], // Default value for business category
       businessDescription: [''], // Default value for business description
-      storeTimings: [''], // Default value for store timings
+      storeTimings: ['allDays'], // Default value for store timings
       businessEmail: ['', [Validators.required, Validators.email]], // Validators for business email,
       userType: ['', [Validators.required]],
-      mobileNumber: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(10) ]],
+      mobileNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
       userName: ['', [Validators.required]],
       // Accept Terms checkbox
       acceptTerms: [false, Validators.requiredTrue]
+    });
+
+    this.days.forEach(day => {
+      this.businessForm.addControl(day.toLowerCase() + 'Open', this.fb.control(false));
+      this.businessForm.addControl(day.toLowerCase() + 'StartTime', this.fb.control(''));
+      this.businessForm.addControl(day.toLowerCase() + 'EndTime', this.fb.control(''));
     });
   }
   ngOnInit() {

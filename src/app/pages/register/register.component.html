@@ -74,11 +74,59 @@
 
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-last-name">Store Timings</label>
-                    <input type="text" id="input-last-name" class="form-control form-control-alternative"
-                      placeholder="Last name" value="Jesse">
+                    <label class="form-control-label">Store Timings</label>
+                    <div>
+                      <label class="radio-inline">
+                        <input class="form-control-radio" type="radio" formControlName="storeTimings" value="allDays"> All Days
+                      </label>
+                      <label class="radio-inline">
+                        <input class="form-control-radio" type="radio" formControlName="storeTimings" value="pickDays"> Pick Days
+                      </label>
+                    </div>
+                
+                    <!-- Only show if "Pick Days" is selected -->
+                    <div *ngIf="businessForm.get('storeTimings').value === 'pickDays'">
+                      <div class="form-row align-items-center" *ngFor="let day of days">
+                        <div class="col-sm-3">
+                          <label>{{ day }}</label>
+                        </div>
+                        <div class="col-sm-9">
+                          <div class="row align-items-center">
+                            <div class="col-auto">
+                              <label class="switch">
+                                <input type="checkbox" [formControl]="businessForm.get(day.toLowerCase() + 'Open')">
+                                <span class="slider round"></span>
+                              </label>
+                            </div>
+                            <div *ngIf="businessForm.get(day.toLowerCase() + 'Open').value" class="col-auto">
+                              Open
+                            </div>
+                            <div *ngIf="!businessForm.get(day.toLowerCase() + 'Open').value" class="col-auto">
+                              Closed
+                            </div>
+                            <div *ngIf="businessForm.get(day.toLowerCase() + 'Open').value" class="col-auto">
+                              <input type="time" class="form-control time-input"
+                                [formControl]="businessForm.get(day.toLowerCase() + 'StartTime')">
+                            </div>
+                            <div *ngIf="businessForm.get(day.toLowerCase() + 'Open').value" class="col-auto text-center">
+                              -
+                            </div>
+                            <div *ngIf="businessForm.get(day.toLowerCase() + 'Open').value" class="col-auto">
+                              <input type="time" class="form-control time-input"
+                                [formControl]="businessForm.get(day.toLowerCase() + 'EndTime')">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
+                
+                
+                
+                
+                
+
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-last-name">Business Email Address</label>
@@ -171,8 +219,8 @@
                     <ngx-intl-tel-input [cssClass]="'custom'" [preferredCountries]="preferredCountries"
                       [enableAutoCountrySelect]="false" [enablePlaceholder]="true" [searchCountryFlag]="false"
                       [selectFirstCountry]="true" [selectedCountryISO]="CountryISO.India" [maxLength]="10"
-                      [phoneValidation]="true" [separateDialCode]="true"
-                      [numberFormat]="PhoneNumberFormat.National" name="mobileNumber" formControlName="mobileNumber">
+                      [phoneValidation]="true" [separateDialCode]="true" [numberFormat]="PhoneNumberFormat.National"
+                      name="mobileNumber" formControlName="mobileNumber">
                     </ngx-intl-tel-input>
                     <!-- <input type="text" id="mobileNumber" class="form-control form-control-alternative"
                       placeholder="Enter your mobile number" formControlName="mobileNumber" maxlength="14"
