@@ -1,6 +1,5 @@
 <div class="mt--1">
   <div class="row">
-
     <div class="col-xl-12 order-xl-1">
       <div class="">
         <div class="">
@@ -8,32 +7,30 @@
             <!-- Avatar section -->
             <div class="avatar-wrapper">
               <div class="avatar rounded-circle overflow-hidden position-relative">
+                <!-- Avatar display -->
                 <img *ngIf="imageUrl; else defaultAvatar" [src]="imageUrl" class="img-fluid" alt="Avatar">
                 <ng-template #defaultAvatar>
                   <div class="default-avatar d-flex justify-content-center align-items-center text-secondary bg-light">
-                    <span class="material-icons">Brand logo </span> <!-- Change to your preferred icon or text -->
+                    <span class="material-icons">Brand logo</span> <!-- Change to your preferred icon or text -->
                   </div>
                 </ng-template>
+                <!-- Avatar upload button -->
                 <div class="camera-icon">
                   <i class="fa fa-solid fa-camera"></i>
                 </div>
                 <input type="file" (change)="onFileSelected($event)" accept="image/*"
                   class="position-absolute top-0 start-0 translate-middle btn btn-sm btn-light">
-
               </div>
             </div>
             <!-- End Avatar section -->
           </div>
 
-
           <form [formGroup]="businessForm" (ngSubmit)="submitForm()">
-
             <div class="pl-lg-4">
-
               <div class="row">
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-username">Businee Name</label>
+                    <label class="form-control-label" for="input-username">Business Name</label>
                     <input type="text" id="input-username" class="form-control form-control-alternative"
                       formControlName="businessName" placeholder="Business Name" required>
                     <div style="color: red;"
@@ -68,22 +65,21 @@
                       placeholder="Business Description"></textarea>
                   </div>
                 </div>
-
               </div>
               <div class="row">
-
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label">Store Timings</label>
                     <div>
                       <label class="radio-inline">
-                        <input class="form-control-radio" type="radio" formControlName="storeTimings" value="allDays"> All Days
+                        <input class="form-control-radio" type="radio" formControlName="storeTimings" value="allDays">
+                        All Days
                       </label>
                       <label class="radio-inline">
-                        <input class="form-control-radio" type="radio" formControlName="storeTimings" value="pickDays"> Pick Days
+                        <input class="form-control-radio" type="radio" formControlName="storeTimings" value="pickDays">
+                        Pick Days
                       </label>
                     </div>
-                
                     <!-- Only show if "Pick Days" is selected -->
                     <div *ngIf="businessForm.get('storeTimings').value === 'pickDays'">
                       <div class="form-row align-items-center" *ngFor="let day of days">
@@ -94,7 +90,8 @@
                           <div class="row align-items-center">
                             <div class="col-auto">
                               <label class="switch">
-                                <input type="checkbox" [formControl]="businessForm.get(day.toLowerCase() + 'Open')">
+                                <input class="timingsCheckbox" type="checkbox"
+                                  [formControl]="businessForm.get(day.toLowerCase() + 'Open')">
                                 <span class="slider round"></span>
                               </label>
                             </div>
@@ -121,74 +118,67 @@
                     </div>
                   </div>
                 </div>
-                
-                
-                
-                
-                
 
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-last-name">Business Email Address</label>
-                    <input required type="email" id="businessEmail" class="form-control form-control-alternative"
-                      formControlName="businessEmail" placeholder="Business Email Address">
-                    <div style="color: red;"
-                      *ngIf="businessForm.get('businessEmail').invalid && (businessForm.get('businessEmail').dirty || businessForm.get('businessEmail').touched)">
-
-                      <div *ngIf="businessForm.get('businessEmail').errors?.email">Invalid email.</div>
-                      <div *ngIf="businessForm.get('businessEmail').errors?.required">Email is required.</div>
+                    <label class="form-control-label" for="gstNumber">GST Number</label>
+                    <div class="input-group">
+                      <input type="text" id="gstNumber" class="form-control form-control-alternative gst-input"
+                        placeholder="Enter GST Number" formControlName="gstNumber">
+                      <div class="input-group-append">
+                        <label for="uploadGstFile" class="btn btn-outline-secondary mb-0">
+                          <i class="fa fa-upload"></i> 
+                        </label>
+                        <input id="uploadGstFile" type="file" (change)="onGstFileSelected($event)" accept=".pdf,.doc,.docx,.xls,.xlsx"
+                          style="display: none;">
+                      </div>
+                    </div>
+                    <div class="mt-2" *ngIf="gstFile">
+                     
+                      
+                      <div class="d-flex align-items-center">
+                        <p class="mb-0 mr-2">{{ gstFile.name }}</p>
+                        <button type="button" class="btn btn-sm btn-primary mr-2" (click)="downloadGstFile()">
+                          <i class="fa fa-download"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-danger" (click)="removeGstFile()">
+                          <i class="fa fa-trash"></i>
+                        </button>
+                      </div>
+                      
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-last-name">Business Website URL</label>
-                    <input type="text" id="input-last-name" class="form-control form-control-alternative"
-                      placeholder="Last name" value="Jesse">
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-last-name">GST</label>
-                    <input type="text" id="input-last-name" class="form-control form-control-alternative"
-                      placeholder="Last name" value="Jesse">
-                  </div>
-                </div>
-              </div>
-
 
               <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-last-name">Business Location</label>
-                    <input type="text" id="input-last-name" class="form-control form-control-alternative"
-                      placeholder="Last name" value="Jesse">
+                    <label class="form-control-label" for="businessLocation">Business Location</label>
+                    <input type="text" id="businessLocation" class="form-control form-control-alternative"
+                      placeholder="Business Location">
                   </div>
                 </div>
-
               </div>
 
               <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-last-name">Are you the owner/manager of this
-                      business</label>
+                    <label class="form-control-label">Are you the owner/manager of this business?</label>
                     <div>
                       <label>
                         <input type="radio" formControlName="userType" value="owner"> I'm the business owner
                       </label>
-                      <div>
-                        <label>
-                          <input type="radio" formControlName="userType" value="manager"> I'm the in charge/manager
-                        </label>
-                      </div>
-                      <div>
-                        <label>
-                          <input type="radio" formControlName="userType" value="employee"> I'm the employee
-                        </label>
-                      </div>
+                    </div>
+                    <div>
+                      <label>
+                        <input type="radio" formControlName="userType" value="manager"> I'm the in charge/manager
+                      </label>
+                    </div>
+                    <div>
+                      <label>
+                        <input type="radio" formControlName="userType" value="employee"> I'm the employee
+                      </label>
                     </div>
                     <div style="color: red;"
                       *ngIf="businessForm.get('userType').hasError('required') && businessForm.get('userType').touched">
@@ -196,7 +186,6 @@
                     </div>
                   </div>
                 </div>
-
               </div>
 
               <div class="row">
@@ -207,7 +196,6 @@
                       placeholder="Enter your name" formControlName="userName" />
                     <div style="color: red;"
                       *ngIf="businessForm.get('userName').invalid && (businessForm.get('userName').dirty || businessForm.get('userName').touched)">
-
                       <div *ngIf="businessForm.get('userName').errors?.required">Name is required.</div>
                     </div>
                   </div>
@@ -215,36 +203,25 @@
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="mobileNumber">Mobile Number</label>
-                    <br>
-                    <ngx-intl-tel-input [cssClass]="'custom'" [preferredCountries]="preferredCountries"
-                      [enableAutoCountrySelect]="false" [enablePlaceholder]="true" [searchCountryFlag]="false"
-                      [selectFirstCountry]="true" [selectedCountryISO]="CountryISO.India" [maxLength]="10"
-                      [phoneValidation]="true" [separateDialCode]="true" [numberFormat]="PhoneNumberFormat.National"
-                      name="mobileNumber" formControlName="mobileNumber">
-                    </ngx-intl-tel-input>
-                    <!-- <input type="text" id="mobileNumber" class="form-control form-control-alternative"
-                      placeholder="Enter your mobile number" formControlName="mobileNumber" maxlength="14"
-                      (input)="onMobileNumberInput($event)" /> -->
+                    <input type="text" id="mobileNumber" class="form-control form-control-alternative"
+                      placeholder="Enter your mobile number" formControlName="mobileNumber">
                     <div style="color: red;"
                       *ngIf="businessForm.get('mobileNumber').hasError('required') && businessForm.get('mobileNumber').touched">
                       Mobile number is required.
                     </div>
                     <div style="color: red;"
                       *ngIf="businessForm.get('mobileNumber').errors && businessForm.get('mobileNumber').touched">
-                      Please enter a valid 10-digit mobile number.
+                      Please enter a valid mobile number.
                     </div>
                   </div>
                 </div>
-
               </div>
 
-
               <div class="row">
-
                 <div class="col-lg-12">
                   <div class="form-group">
                     <label for="acceptTerms">
-                      <input type="checkbox" id="acceptTerms" formControlName="acceptTerms" required />
+                      <input type="checkbox" id="acceptTerms" formControlName="acceptTerms" />
                       I accept the terms and conditions as well as Privacy Policy
                     </label>
                     <div style="color: red;"
@@ -255,19 +232,15 @@
                 </div>
               </div>
 
-
               <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary mt-4">Submit</button>
                   </div>
                 </div>
               </div>
 
             </div>
-
-
-
           </form>
         </div>
       </div>

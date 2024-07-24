@@ -110,7 +110,7 @@
   border-radius: 50%;
 }
 
-input[type="checkbox"] {
+.timingsCheckbox {
   display: none; /* Hide the actual checkbox */
 }
 
@@ -133,4 +133,8 @@ input[type="checkbox"]:checked + .slider:before {
 
 .col-auto {
   margin-right: 10px; /* Adjust margin for spacing between elements */
+}
+.gst-input {
+  width: 150px; /* Adjust the width as per your design requirements */
+  font-size: 14px; /* Optional: Adjust the font size */
 }
