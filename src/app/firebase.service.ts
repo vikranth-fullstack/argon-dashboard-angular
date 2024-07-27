@@ -17,6 +17,8 @@ export class FirebaseService {
   db: Firestore;
   studentCol: CollectionReference<DocumentData>;
   businessCategoryCol: CollectionReference<DocumentData>;
+  catlogCol: CollectionReference<DocumentData>;
+
   private updatedSnapshot = new Subject<QuerySnapshot<DocumentData>>();
   obsr_UpdatedSnapshot = this.updatedSnapshot.asObservable();
   private basePath = '/uploads';
@@ -27,7 +29,7 @@ export class FirebaseService {
     this.db = getFirestore();
     this.studentCol = collection(this.db, 'students');
     this.businessCategoryCol = collection(this.db, 'businesscategories');
-
+    this.catlogCol=collection(this.db,'BusinessCatalog');
     // Get Realtime Data
     onSnapshot(this.studentCol, (snapshot) => {
       this.updatedSnapshot.next(snapshot);
@@ -98,6 +100,15 @@ export class FirebaseService {
     await addDoc(this.studentCol, {
       name,
       age
+    })
+    return;
+  }
+
+  async addBusinessCatalog(Image1: string, Image2: string,Image3:string) {
+    await addDoc(this.catlogCol, {
+      Image1,
+      Image2,
+      Image3
     })
     return;
   }
