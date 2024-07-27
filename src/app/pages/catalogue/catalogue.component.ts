@@ -21,6 +21,7 @@ currentFileUpload;
     
   }
   onSubmit(form: NgForm) {
+    this.markAllAsTouched(form);
     if (form.valid) {
       // Form is valid, proceed with form submission logic
       let businessCatlog={
@@ -38,19 +39,20 @@ currentFileUpload;
       }
      else {
       // Form is invalid, mark all controls as touched to trigger validation messages
-      this.markFormGroupTouched(form);
+      this.markAllAsTouched(form);
     }
   }
 
-  private markFormGroupTouched(formGroup: NgForm) {
-    Object.keys(formGroup.controls).forEach(key => {
-      const control = formGroup.controls[key];
-      if (control instanceof NgForm) {
-        this.markFormGroupTouched(control);
-      } else {
-        control.markAsTouched();
-      }
-    });
+  markAllAsTouched(form: NgForm) {
+    if (form && form.controls) {
+      Object.keys(form.controls).forEach(key => {
+        const control = form.controls[key];
+        control.markAsTouched({ onlySelf: true });
+        if (control['controls']) { // Handle nested controls if any
+          this.markAllAsTouched(control as any); 
+        }
+      });
+    }
   }
   // Save(catalog:any){
   //   let businessCatlog={
