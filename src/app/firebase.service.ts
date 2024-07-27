@@ -104,11 +104,17 @@ export class FirebaseService {
     return;
   }
 
-  async addBusinessCatalog(Image1: string, Image2: string,Image3:string) {
+  async addBusinessCatalog(Image1: string, Image2: string,Image3:string, ItemName:string, Country:string, Description:string, Link:string, MRP:string, SellingPrice:string) {
     await addDoc(this.catlogCol, {
-      Image1,
+      Image1, 
       Image2,
-      Image3
+      Image3,
+      ItemName,
+      Country, 
+      Description,
+      Link,
+      MRP,
+      SellingPrice
     })
     return;
   }

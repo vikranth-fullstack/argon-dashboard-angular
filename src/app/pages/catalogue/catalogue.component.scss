@@ -1,0 +1,141 @@
+.avatar-wrapper {
+    text-align: center;
+  }
+  
+  .avatar {
+    width: 200px;
+    /* Adjust size as needed */
+    height: 200px;
+    /* Adjust size as needed */
+    border-radius: 0%;
+    /* Ensure it's a circle */
+    overflow: hidden;
+    background-color: #f0f0f0;
+    /* Placeholder color */
+    margin: 0 auto;
+    /* Center horizontally */
+    position: relative;
+    /* Ensure position-relative for children */
+  }
+  
+  .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Maintain aspect ratio */
+  }
+  
+  .default-avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-size: 48px;
+    /* Adjust font size as needed */
+    color: #757575;
+    /* Adjust color as needed */
+  }
+  
+  /* Position the file input below the avatar */
+  .avatar input[type="file"] {
+    position: absolute;
+    bottom: -10px;
+    /* Adjust to position it properly */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  /* Camera icon */
+  .camera-icon {
+    position: absolute;
+    bottom: 47px;
+    /* Adjust vertical position */
+    right: 13px;
+    /* Adjust horizontal position */
+    background-color: rgba(10, 1, 1, 0.989);
+    /* Adjust background color and opacity */
+    padding: 5px;
+    /* Adjust padding as needed */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .camera-icon .material-icons {
+    font-size: 18px;
+    /* Adjust icon size */
+    color: #333;
+    /* Adjust icon color */
+  
+  }
+  
+  .time-input {
+    width: 100%; /* Ensure time inputs fill their container */
+  }
+  
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+    margin-top: 5px; /* Adjust vertical alignment if needed */
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 20px;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px; /* Adjust height for better appearance */
+    width: 16px; /* Adjust width for better appearance */
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+  }
+  
+  .timingsCheckbox {
+    display: none; /* Hide the actual checkbox */
+  }
+  
+  input[type="checkbox"]:checked + .slider {
+    background-color: #2196F3; /* Color when checkbox is checked */
+  }
+  
+  input[type="checkbox"]:checked + .slider:before {
+    transform: translateX(20px); /* Move slider to the right when checkbox is checked */
+  }
+  
+  /* Optional: Adjust padding/margins for better visual spacing */
+  .form-row {
+    margin-bottom: 10px;
+  }
+  
+  .align-items-center {
+    align-items: center; /* Ensure vertical alignment */
+  }
+  
+  .col-auto {
+    margin-right: 10px; /* Adjust margin for spacing between elements */
+  }
+  .gst-input {
+    width: 150px; /* Adjust the width as per your design requirements */
+    font-size: 14px; /* Optional: Adjust the font size */
+  }
+  
