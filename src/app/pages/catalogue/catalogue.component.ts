@@ -17,9 +17,20 @@ image3=null;
 selectedFile;
 imageUrl;
 currentFileUpload;
+catalogColl=[];
   ngOnInit() {
     
+    this.fetchBusinessCategories();
+
+
   }
+  async fetchBusinessCategories() {
+    this.catalogColl= await this.firebaseService.getBusinessCatalog('1234');
+
+    
+    console.log(this.catalogColl);
+  }
+
   onSubmit(form: NgForm) {
     this.markAllAsTouched(form);
     if (form.valid) {

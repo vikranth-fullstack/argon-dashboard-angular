@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { initializeApp } from 'firebase/app';
-import { Firestore, getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, DocumentData, CollectionReference, onSnapshot, QuerySnapshot } from 'firebase/firestore'
+import { Firestore, getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, DocumentData, CollectionReference, onSnapshot, QuerySnapshot, query, where } from 'firebase/firestore'
 import { finalize, Observable, Subject } from 'rxjs';
 import { environment } from '../environments/environment';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
@@ -89,6 +89,23 @@ export class FirebaseService {
   async getBusinessCategories() {
     const snapshot = await getDocs(this.businessCategoryCol);
     return snapshot;
+  }
+  async getBusinessCatalog(mobile:string) {
+    //const snapshot = await getDocs(this.catlogCol);
+    //return snapshot;
+    const catalogRef = collection(this.db, 'BusinessCatalog'); // Adjust the collection name as needed
+
+    // Create a query with a filter
+    const q = query(catalogRef, where('Mobile', '==', mobile));
+
+    // Fetch the filtered documents
+    const snapshot = await getDocs(q);
+
+    // Process the results as needed
+    const results = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    
+    return results;
+
   }
 
   async getStudents() {
