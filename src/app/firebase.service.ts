@@ -107,6 +107,27 @@ export class FirebaseService {
     return results;
 
   }
+  async getBusinessCatalogbyId(id:string) {
+    //const snapshot = await getDocs(this.catlogCol);
+    //return snapshot;
+    const catalogRef = collection(this.db, 'BusinessCatalog'); // Adjust the collection name as needed
+
+    // Create a query with a filter
+    const q = query(catalogRef, where('id', '==', id));
+
+    // Fetch the filtered documents
+    const snapshot = await getDocs(q);
+
+    // Process the results as needed
+    const results = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    
+    return results;
+
+  }
+  async getBusinessCatalogs() {
+    const snapshot = await getDocs(this.catlogCol);
+    return snapshot;
+  }
 
   async getStudents() {
     const snapshot = await getDocs(this.studentCol);
@@ -121,7 +142,7 @@ export class FirebaseService {
     return;
   }
 
-  async addBusinessCatalog(Image1: string, Image2: string,Image3:string, ItemName:string, Country:string, Description:string, Link:string, MRP:string, SellingPrice:string) {
+  async addBusinessCatalog(Image1: string, Image2: string,Image3:string, ItemName:string, Country:string, Description:string, Link:string, MRP:string, SellingPrice:string, Mobile:string, isShown:boolean) {
     await addDoc(this.catlogCol, {
       Image1, 
       Image2,
@@ -131,7 +152,9 @@ export class FirebaseService {
       Description,
       Link,
       MRP,
-      SellingPrice
+      SellingPrice,
+      Mobile,
+      isShown
     })
     return;
   }
@@ -147,6 +170,9 @@ export class FirebaseService {
     await updateDoc(docRef, { name, age })
     return;
   }
-
-
+  async updateBusinessCatalogue(docId: string, updatedFields: { [key: string]: any }) {
+    const docRef = doc(this.db, 'BusinessCatalog', docId);
+    await updateDoc(docRef, updatedFields)
+    return;
+  }
 }

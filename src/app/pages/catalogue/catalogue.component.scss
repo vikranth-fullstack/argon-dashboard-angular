@@ -89,4 +89,107 @@
   .btn-primary:hover {
     background-color: #0056b3;
   }
-  
+  /* catalogue.component.scss */
+
+.tabs {
+  display: flex;
+  margin-bottom: 16px;
+}
+
+.tabs button {
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  background-color: #f1f1f1;
+  margin-right: 8px;
+  border-radius: 4px;
+}
+
+.tabs button.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin: 16px;
+  overflow: hidden;
+  width: 300px;
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+}
+
+.card-body {
+  padding: 16px;
+}
+
+.card-body h5 {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.card-body p {
+  margin: 2px 0;
+  font-size: 14px;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  //gap: 16px;
+}
+
+/* The switch - the box around the slider */
+/* Styles for the switch container */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide the default checkbox */
+.switch input {
+  display: none;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+/* The circle inside the slider */
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+/* Change background color when checked */
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+/* Move the circle when checked */
+input:checked + .slider:before {
+  transform: translateX(26px);
+}

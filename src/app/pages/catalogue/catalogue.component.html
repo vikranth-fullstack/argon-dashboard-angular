@@ -14,7 +14,7 @@
         <div class="avatar-wrapper">
           <div class="avatar square overflow-hidden position-relative">
             <!-- Avatar display -->
-            <img *ngIf="image1; else defaultAvatar1" [src]="image1" class="img-fluid" alt="Product Image 1">
+            <img *ngIf="image1; else defaultAvatar1" [src]="image1" class="img-fluid" alt="Product Image 1" >
             <ng-template #defaultAvatar1>
               <div class="default-avatar">
                 <span class="material-icons">Add Image</span>
@@ -149,12 +149,22 @@
                   Selling Price in GEM is Required
                 </div>
               </div>
+               <!-- catalogueMobileNumber -->
+            <div class="col-lg-6 mt-4">
+              <label class="form-control-label" for="catalogueMobileNumber">Mobile Number<span style="color: red;">*</span></label>
+              <input type="text" id="catalogueMobileNumber" class="form-control form-control-alternative"
+               minlength="10" placeholder="Mobile Number" name="MobileNumber" ngModel #MobileNumber="ngModel" required>
+              <div style="color: red;" *ngIf="MobileNumber.touched && MobileNumber.errors?.required">
+                Mobile Number is Required
+              </div>
+            </div>
             </div>
   
             <div class="row">
               <div class="col-lg-12 mt-4">
                 <div class="form-group">
-                  <button type="submit" class="btn btn-primary mt-4">Submit</button>
+                  <button type="submit" *ngIf="!isUpdating" class="btn btn-primary mt-4">Submit</button>
+                  <button type="button" class="btn btn-primary mt-4" (click)="updateCatalogue(catalogueForm)" *ngIf="isUpdating">Update</button>
                 </div>
               </div>
             </div>
@@ -163,4 +173,57 @@
       </div>
     </div>
   </div>
+
+  
+<!-- Display catalogue -->
+<div class="p-lg-4 container">
+  <div class="tabs">
+    <button (click)="setActiveTab('all')" [class.active]="activeTab === 'all'">All Items</button>
+    <button (click)="setActiveTab('hidden')" [class.active]="activeTab === 'hidden'">Hidden Items</button>
+  </div>
+  
+  <div class="card-container" *ngIf="activeTab === 'all'">
+    <div *ngFor="let item of allActiveCatalogue" class="card" (click)="geteditCatalogue(item.Mobile, item.id)">
+      <div *ngIf="item.Image1">
+        <img [src]="item.Image1" alt="Image 1">
+      </div>
+      <div class="card-body row">
+        <div class="col-6">
+          <h5>{{ item.ItemName }}</h5>
+          <p>MRP: {{ item.MRP }}</p>
+          <p>Selling Price: {{ item.SellingPrice }}</p>
+        </div>
+        <div class="col-6">
+          <label class="switch">
+            <input type="checkbox" name="toggle{{ i }}" [(ngModel)]="item.isShown" (change)="onToggleChange(item)">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card-container" *ngIf="activeTab === 'hidden'">
+    <div *ngFor="let item of allDisabledCatalogue" class="card" (click)="geteditCatalogue(item.Mobile,item.id)">
+      <div *ngIf="item.Image1">
+        <img [src]="item.Image1" alt="Image 1">
+      </div>
+      <div class="card-body row">
+        <div class="col-6">
+          <h5>{{ item.ItemName }}</h5>
+          <p>MRP: {{ item.MRP }}</p>
+          <p>Selling Price: {{ item.SellingPrice }}</p>
+        </div>
+        <div class="col-6">
+          <label class="switch">
+            <input type="checkbox" name="toggle{{ i }}" [(ngModel)]="item.isShown" (change)="onToggleChange(item)">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
   
