@@ -342,4 +342,32 @@
         display: none;
     }
   }
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Full height to fill the viewport */
+  }
+  
+  .nav-links {
+    flex: 1; /* This makes sure the nav links take up available space */
+    overflow-y: auto; /* Allows scrolling if content overflows */
+  }
+  
+  .logout-container {
+    margin-top: auto; /* Pushes this container to the bottom of the sidebar */
+    padding: 10px;
+    border-top: 1px solid #ddd; /* Optional: Add a border to separate logout */
+    background: #f8f9fa; /* Optional: Add background color */
+  }
+  
+  .logout-container a {
+    display: flex;
+    align-items: center;
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .logout-container i {
+    margin-right: 10px; /* Space between the icon and text */
+  }
   

@@ -7,6 +7,7 @@ export const environment = {
   firebaseConfig: {
     apiKey: "AIzaSyDMCF0bnkDvt5SDoVFvl2MrrMsFECaDyqg",
     authDomain: "gembizapp.firebaseapp.com",
+    databaseURL: "https://gembizapp-default-rtdb.asia-southeast1.firebasedatabase.app",
     projectId: "gembizapp",
     storageBucket: "gembizapp.appspot.com",
     messagingSenderId: "985201021426",

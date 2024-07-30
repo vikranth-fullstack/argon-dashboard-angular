@@ -17,7 +17,8 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { environment } from '../environments/environment';
-
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideAuth, getAuth } from '@angular/fire/auth';
 
 @NgModule({
   imports: [
@@ -28,7 +29,9 @@ import { environment } from '../environments/environment';
     ComponentsModule,
     NgbModule,
     RouterModule,
-    AppRoutingModule,AngularFireDatabaseModule,AngularFireStorageModule
+    AppRoutingModule,AngularFireDatabaseModule,AngularFireStorageModule,
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideAuth(() => getAuth()),
   ],
   declarations: [
     AppComponent,

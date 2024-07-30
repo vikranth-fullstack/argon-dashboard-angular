@@ -127,4 +127,9 @@ export class SidebarComponent implements OnInit {
   showSubmenu(itemEl: HTMLElement) {
     itemEl.classList.toggle('showMenu');
   }
+  logout() {
+    localStorage.clear();
+    //this.authService.logout(); // Assuming you have a logout method in your AuthService
+    this.router.navigate(['/login']); // Redirect to login page
+  }
 }
