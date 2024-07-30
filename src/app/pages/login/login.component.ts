@@ -39,7 +39,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (this.verificationId) {
       this.otpService.verifyOtp(this.verificationId, this.otp)
         .then((result) => {
+          localStorage.setItem('user', 'vik');
           console.log('OTP verified successfully:', result);
+          this.router.navigate(['/dashboard']);
         })
         .catch((error) => {
           console.error('Error verifying OTP:', error);
