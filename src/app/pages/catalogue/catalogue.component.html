@@ -1,229 +1,137 @@
-<!-- app.component.html -->
-
-<div class="p-lg-4 container">
-    <div class="text-center">
-      <h2>Add Item</h2>
-    </div>
-  
-    <div id="productImages" class="my-4">
-      <div class="text-left">
-        <h2>Add Product Images</h2>
-      </div>
-      <div class="image-gallery">
-        <!-- First image upload -->
-        <div class="avatar-wrapper">
-          <div class="avatar square overflow-hidden position-relative">
-            <!-- Avatar display -->
-            <img *ngIf="image1; else defaultAvatar1" [src]="image1" class="img-fluid" alt="Product Image 1" >
-            <ng-template #defaultAvatar1>
-              <div class="default-avatar">
-                <span class="material-icons">Add Image</span>
-              </div>
-            </ng-template>
-            <!-- Avatar upload button -->
-            <div class="camera-icon">
-              <i class="fa fa-solid fa-camera"></i>
-            </div>
-            <input type="file" (change)="onFileSelected($event, 1)" accept="image/*"
-              class="file-input" id="fileInput1">
-          </div>
-          
-        </div>
-  
-        <!-- Second image upload -->
-        <div class="avatar-wrapper">
-          <div class="avatar square overflow-hidden position-relative">
-            <!-- Avatar display -->
-            <img *ngIf="image2; else defaultAvatar2" [src]="image2" class="img-fluid" alt="Product Image 2">
-            <ng-template #defaultAvatar2>
-              <div class="default-avatar">
-                <span class="material-icons">Add Image</span>
-              </div>
-            </ng-template>
-            <!-- Avatar upload button -->
-            <div class="camera-icon">
-              <i class="fa fa-solid fa-camera"></i>
-            </div>
-            <input type="file" (change)="onFileSelected($event, 2)" accept="image/*"
-              class="file-input" id="fileInput2">
-          </div>
-          
-        </div>
-  
-        <!-- Third image upload -->
-        <div class="avatar-wrapper">
-          <div class="avatar square overflow-hidden position-relative">
-            <!-- Avatar display -->
-            <img *ngIf="image3; else defaultAvatar3" [src]="image3" class="img-fluid" alt="Product Image 3">
-            <ng-template #defaultAvatar3>
-              <div class="default-avatar">
-                <span class="material-icons">Add Image</span>
-              </div>
-            </ng-template>
-            <!-- Avatar upload button -->
-            <div class="camera-icon">
-              <i class="fa fa-solid fa-camera"></i>
-            </div>
-            <input type="file" (change)="onFileSelected($event, 3)" accept="image/*"
-              class="file-input" id="fileInput3">
-          </div>
-          
-        </div>
-      </div>
-      <!-- End Avatar section -->
-      
-      <div *ngIf="!image1 && !image2 && !image3" style="color: red;">
-        At least one image is required.
-      </div>
-      
-      <div>
-        <form #catalogueForm="ngForm" (ngSubmit)="onSubmit(catalogueForm)">
-          <div ngModelGroup="catalogue" #catalogueGroup="ngModelGroup">
-            <div class="text-left mt-4">
-              <h2>Product Info</h2>
-            </div>
-            <div class="row">
-              <!-- Item Name -->
-              <div class="col-lg-6 mt-4">
-                <label class="form-control-label" for="catalogueItemName">Item Name<span style="color: red;">*</span></label>
-                <input type="text" id="catalogueItemName" class="form-control form-control-alternative"
-                  placeholder="Item Name" name="ItemName" ngModel #ItemName="ngModel" required>
-                <div style="color: red;" *ngIf="ItemName.touched && ItemName.errors?.required">
-                  Item Name is Required
-                </div>
-              </div>
-  
-              <!-- Country -->
-              <div class="col-lg-6 mt-4">
-                <label class="form-control-label" for="catalogueCountry">Country<span style="color: red;">*</span></label>
-                <input type="text" id="catalogueCountry" class="form-control form-control-alternative"
-                  placeholder="Country" name="Country" ngModel #Country="ngModel" required>
-                <div style="color: red;" *ngIf="Country.touched && Country.errors?.required">
-                  Country is Required
-                </div>
-              </div>
-            </div>
-  
-            <div class="row mt-4">
-              <!-- Description -->
-              <div class="col-lg-6 mt-4">
-                <label class="form-control-label" for="catalogueDescription">Description<span style="color: red;">*</span></label>
-                <input type="text" id="catalogueDescription" class="form-control form-control-alternative"
-                  placeholder="Description" name="Description" ngModel #Description="ngModel" required>
-                <div style="color: red;" *ngIf="Description.touched && Description.errors?.required">
-                  Description is Required
-                </div>
-              </div>
-  
-              <!-- Link -->
-              <div class="col-lg-6 mt-4">
-                <label class="form-control-label" for="catalogueLink">Link<span style="color: red;">*</span></label>
-                <input type="text" id="catalogueLink" class="form-control form-control-alternative"
-                  placeholder="Link" name="Link" ngModel #Link="ngModel" required>
-                <div style="color: red;" *ngIf="Link.touched && Link.errors?.required">
-                  Link is Required
-                </div>
-              </div>
-            </div>
-            
-            <div class="mt-4">
-              <h2>Price Info</h2>
-            </div>
-            <div class="row">
-              <!-- MRP/Retail Price -->
-              <div class="col-lg-6 mt-4">
-                <label class="form-control-label" for="catalogueMRP">MRP/Retail Price<span style="color: red;">*</span></label>
-                <input type="text" id="catalogueMRP" class="form-control form-control-alternative"
-                  placeholder="₹ MRP/Retail Price" name="MRP" ngModel #MRP="ngModel" required>
-                <div style="color: red;" *ngIf="MRP.touched && MRP.errors?.required">
-                  MRP/Retail Price is Required
-                </div>
-              </div>
-  
-              <!-- Selling Price in GEM -->
-              <div class="col-lg-6 mt-4">
-                <label class="form-control-label" for="catalogueSellingPrice">Selling Price in GEM<span style="color: red;">*</span></label>
-                <input type="text" id="catalogueSellingPrice" class="form-control form-control-alternative"
-                  placeholder="₹ Selling Price in GEM" name="SellingPrice" ngModel #SellingPrice="ngModel" required>
-                <div style="color: red;" *ngIf="SellingPrice.touched && SellingPrice.errors?.required">
-                  Selling Price in GEM is Required
-                </div>
-              </div>
-               <!-- catalogueMobileNumber -->
-            <div class="col-lg-6 mt-4">
-              <label class="form-control-label" for="catalogueMobileNumber">Mobile Number<span style="color: red;">*</span></label>
-              <input type="text" id="catalogueMobileNumber" class="form-control form-control-alternative"
-               minlength="10" placeholder="Mobile Number" name="MobileNumber" ngModel #MobileNumber="ngModel" required>
-              <div style="color: red;" *ngIf="MobileNumber.touched && MobileNumber.errors?.required">
-                Mobile Number is Required
-              </div>
-            </div>
-            </div>
-  
-            <div class="row">
-              <div class="col-lg-12 mt-4">
-                <div class="form-group">
-                  <button type="submit" *ngIf="!isUpdating" class="btn btn-primary mt-4">Submit</button>
-                  <button type="button" class="btn btn-primary mt-4" (click)="updateCatalogue(catalogueForm)" *ngIf="isUpdating">Update</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  
+   
 <!-- Display catalogue -->
-<div class="p-lg-4 container">
-  <div class="tabs">
-    <button (click)="setActiveTab('all')" [class.active]="activeTab === 'all'">All Items</button>
-    <button (click)="setActiveTab('hidden')" [class.active]="activeTab === 'hidden'">Hidden Items</button>
-  </div>
-  
-  <div class="card-container" *ngIf="activeTab === 'all'">
-    <div *ngFor="let item of allActiveCatalogue" class="card" (click)="geteditCatalogue(item.Mobile, item.id)">
-      <div *ngIf="item.Image1">
-        <img [src]="item.Image1" alt="Image 1">
-      </div>
-      <div class="card-body row">
-        <div class="col-6">
-          <h5>{{ item.ItemName }}</h5>
-          <p>MRP: {{ item.MRP }}</p>
-          <p>Selling Price: {{ item.SellingPrice }}</p>
+ <div class="seperate" *ngIf="allActiveCatalogue.length > 0 && allDisabledCatalogue.length > 0">
+  <div class="p-lg-4  m-4">
+    <div class="tabs">
+      <button (click)="setActiveTab('all')" [class.active]="activeTab === 'all'">All Items</button>
+      <button (click)="setActiveTab('hidden')" [class.active]="activeTab === 'hidden'">Hidden Items</button>
+    </div>
+    
+    <div class="card-container" *ngIf="activeTab === 'all'">
+      <div *ngFor="let item of allActiveCatalogue" class="card" (click)="navigateToCrud(item.Mobile, item.id)">
+        <div *ngIf="item.Image1">
+          <img [src]="item.Image1" alt="Image 1">
         </div>
-        <div class="col-6">
-          <label class="switch">
-            <input type="checkbox" name="toggle{{ i }}" [(ngModel)]="item.isShown" (change)="onToggleChange(item)">
-            <span class="slider"></span>
-          </label>
+        <div class="card-body row">
+          <div class="col-6">
+            <h5>{{ item.ItemName }}</h5>
+            <p>MRP: {{ item.MRP }}</p>
+            <p>Selling Price: {{ item.SellingPrice }}</p>
+          </div>
+          <div class="col-6">
+            <label class="switch" (click)="$event.stopPropagation()">
+              <input type="checkbox" name="toggle{{ i }}" [(ngModel)]="item.isShown"  (change)="onToggleChange(item)">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card-container" *ngIf="activeTab === 'hidden'">
+      <div *ngFor="let item of allDisabledCatalogue" class="card" (click)="navigateToCrud(item.Mobile,item.id)">
+        <div *ngIf="item.Image1">
+          <img [src]="item.Image1" alt="Image 1">
+        </div>
+        <div class="card-body row">
+          <div class="col-6">
+            <h5>{{ item.ItemName }}</h5>
+            <p>MRP: {{ item.MRP }}</p>
+            <p>Selling Price: {{ item.SellingPrice }}</p>
+          </div>
+          <div class="col-6">
+            <label class="switch" (click)="$event.stopPropagation()">
+              <input type="checkbox" name="toggle{{ i }}" [(ngModel)]="item.isShown" (change)="onToggleChange(item)">
+              <span class="slider"></span>
+            </label>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  
-  <div class="card-container" *ngIf="activeTab === 'hidden'">
-    <div *ngFor="let item of allDisabledCatalogue" class="card" (click)="geteditCatalogue(item.Mobile,item.id)">
-      <div *ngIf="item.Image1">
-        <img [src]="item.Image1" alt="Image 1">
+  <!-- mobile -->
+  <div class="mobile-border">
+    <div class="p-lg-4 container-mob">
+      <div class="tabs">
+        <button  [class.active]="activeTab === 'all'">All Items</button>
+        <button  [class.active]="activeTab === 'hidden'">Hidden Items</button>
       </div>
-      <div class="card-body row">
-        <div class="col-6">
-          <h5>{{ item.ItemName }}</h5>
-          <p>MRP: {{ item.MRP }}</p>
-          <p>Selling Price: {{ item.SellingPrice }}</p>
+      <div class="card-container-mob" *ngIf="activeTab === 'all'">
+        <div *ngFor="let item of allActiveCatalogue" class="card">
+          <div *ngIf="item.Image1">
+            <img [src]="item.Image1" alt="Image 1">
+          </div>
+          <div class="card-body row">
+            <div class="col-6">
+              <h5>{{ item.ItemName }}</h5>
+              <p>MRP: {{ item.MRP }}</p>
+              <p>Selling Price: {{ item.SellingPrice }}</p>
+            </div>
+            <div class="col-6">
+              <label class="switch">
+                <input readonly disabled type="checkbox" name="toggle{{ i }}" [(ngModel)]="item.isShown">
+                <span style="background-color: #90c0e7;" class="slider"></span>
+              </label>
+            </div>
+          </div>
         </div>
-        <div class="col-6">
-          <label class="switch">
-            <input type="checkbox" name="toggle{{ i }}" [(ngModel)]="item.isShown" (change)="onToggleChange(item)">
-            <span class="slider"></span>
-          </label>
+      </div>
+      
+      <div class="card-container-mob" *ngIf="activeTab === 'hidden'">
+        <div *ngFor="let item of allDisabledCatalogue" class="card">
+          <div *ngIf="item.Image1">
+            <img [src]="item.Image1" alt="Image 1">
+          </div>
+          <div class="card-body row">
+            <div class="col-6">
+              <h5>{{ item.ItemName }}</h5>
+              <p>MRP: {{ item.MRP }}</p>
+              <p>Selling Price: {{ item.SellingPrice }}</p>
+            </div>
+            <div class="col-6">
+              <label class="switch">
+                <input type="checkbox" name="toggle{{ i }}" [(ngModel)]="item.isShown">
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    
   </div>
+  
+ </div>
+
+
+<!-- div create buttonn catalogue -->
+
+<div class="seperate" *ngIf="allActiveCatalogue.length === 0 && allDisabledCatalogue.length === 0">
+  <div class="cart-center">
+    <div class="m-2">
+      <img class="web-img" src="../../../assets/img/cart.jpg" alt="Cart">
+    </div>
+    <div class="m-2" >
+      <button class="btn btn-primary" (click)="navigateToCrud('','')">+ catalogue</button>
+    </div>
+  </div>
+  
+  <!-- mobile view -->
+   <div class="mobile-border-cart" *ngIf="allActiveCatalogue.length === 0 && allDisabledCatalogue.length === 0">
+    <div class="container-mob">
+      <div class="m-2">
+        <img  class="mobile-size-cart" src="../../../assets/img/cart.jpg" alt="Cart">
+      </div>
+      <div class="m-2" style="padding-left: 35%;">
+        <button class="btn btn-primary"><span style="size:2rem;">+</span> catalogue</button>
+      </div>
+    </div>
+   </div>
+  
 </div>
 
 
-  
+
+
+
+

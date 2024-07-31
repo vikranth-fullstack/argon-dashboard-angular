@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   verificationId: ConfirmationResult | undefined;
   ngOnInit() {
     if (localStorage.getItem('user') != null) {
-      //this.router.navigate(['/register']);
+      this.router.navigate(['/register']);
     }
   }
   ngOnDestroy() {
@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.otpService.verifyOtp(this.verificationId, this.otp)
         .then((result) => {
           localStorage.setItem('user', 'vik');
+          localStorage.setItem('phone',this.phoneNumber);
           console.log('OTP verified successfully:', result);
           this.router.navigate(['/dashboard']);
         })

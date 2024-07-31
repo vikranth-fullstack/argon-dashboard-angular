@@ -4,6 +4,15 @@
 
 export const environment = {
   production: false,
+  firebaseConfig_GEM: {
+    apiKey: "AIzaSyAa4-6GYp4QNzo4PD8f5KZgfrkziq3RuX0",
+  authDomain: "go-extra-mile-dev.firebaseapp.com",
+  projectId: "go-extra-mile-dev",
+  storageBucket: "go-extra-mile-dev.appspot.com",
+  messagingSenderId: "538539547319",
+  appId: "1:538539547319:web:5073768b6025444cf54b32",
+  measurementId: "G-ZDDFJMLJF4"
+  },
   firebaseConfig: {
     apiKey: "AIzaSyDMCF0bnkDvt5SDoVFvl2MrrMsFECaDyqg",
     authDomain: "gembizapp.firebaseapp.com",
