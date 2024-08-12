@@ -6,22 +6,48 @@
       <button (click)="setActiveTab('all')" [class.active]="activeTab === 'all'">All Items</button>
       <button (click)="setActiveTab('hidden')" [class.active]="activeTab === 'hidden'">Hidden Items</button>
     </div>
-    
-    <div class="card-container" *ngIf="activeTab === 'all'">
-      <div *ngFor="let item of allActiveCatalogue" class="card" (click)="navigateToCrud(item.Mobile, item.id)">
-          <div *ngIf="item.Image1">
-            <div [ngClass]="getBadgeClasses(item.isStatus)"></div>
-            <img [src]="item.Image1" alt="Image 1">
+  
+    <div id="productImages" class="my-4">
+      <div class="text-left">
+        <h2>Add Product Images</h2>
+      </div>
+      <div class="image-gallery">
+        <!-- First image upload -->
+        <div class="avatar-wrapper">
+          <div class="avatar square overflow-hidden position-relative">
+            <!-- Avatar display -->
+            <img *ngIf="image1; else defaultAvatar1" [src]="image1" class="img-fluid" alt="Product Image 1" >
+            <ng-template #defaultAvatar1>
+              <div class="default-avatar">
+                <span class="material-icons">Add Image</span>
+              </div>
+            </ng-template>
+            <!-- Avatar upload button -->
+            <div class="camera-icon">
+              <i class="fa fa-solid fa-camera"></i>
+            </div>
+            <input type="file" (change)="onFileSelected($event, 1)" accept="image/*"
+              class="file-input" id="fileInput1">
           </div>
-        <div class="card-body row">
-          <div class="col-6">
-            <h5>{{ item.ItemName }}</h5>
-            <p>MRP: {{ item.MRP }}</p>
-            <p>Selling Price: {{ item.SellingPrice }}</p>
-            <label *ngIf="item.isStatus=='Verified'" class="label-status success">{{item.isStatus}}</label>
-            <label *ngIf="item.isStatus=='Pending'" class="label-status warning">{{item.isStatus}}</label>
-            <label *ngIf="item.isStatus=='Rejected'" class="label-status danger">{{item.isStatus}}</label>
-            <label *ngIf="item.isStatus=='Hidden'" class="label-status other">{{item.isStatus}}</label>
+          
+        </div>
+  
+        <!-- Second image upload -->
+        <div class="avatar-wrapper">
+          <div class="avatar square overflow-hidden position-relative">
+            <!-- Avatar display -->
+            <img *ngIf="image2; else defaultAvatar2" [src]="image2" class="img-fluid" alt="Product Image 2">
+            <ng-template #defaultAvatar2>
+              <div class="default-avatar">
+                <span class="material-icons">Add Image</span>
+              </div>
+            </ng-template>
+            <!-- Avatar upload button -->
+            <div class="camera-icon">
+              <i class="fa fa-solid fa-camera"></i>
+            </div>
+            <input type="file" (change)="onFileSelected($event, 2)" accept="image/*"
+              class="file-input" id="fileInput2">
           </div>
           <div class="col-6">
             <label class="switch" (click)="$event.stopPropagation()">
@@ -36,7 +62,6 @@
     <div class="card-container" *ngIf="activeTab === 'hidden'">
       <div *ngFor="let item of allDisabledCatalogue" class="card" (click)="navigateToCrud(item.Mobile,item.id)">
         <div *ngIf="item.Image1">
-          <div [ngClass]="getBadgeClasses(item.isStatus)"></div>
           <img [src]="item.Image1" alt="Image 1">
         </div>
         <div class="card-body row">
@@ -44,10 +69,6 @@
             <h5>{{ item.ItemName }}</h5>
             <p>MRP: {{ item.MRP }}</p>
             <p>Selling Price: {{ item.SellingPrice }}</p>
-            <label *ngIf="item.isStatus=='Verified'" class="label-status success">{{item.isStatus}}</label>
-            <label *ngIf="item.isStatus=='Pending'" class="label-status warning">{{item.isStatus}}</label>
-            <label *ngIf="item.isStatus=='Rejected'" class="label-status danger">{{item.isStatus}}</label>
-            <label *ngIf="item.isStatus=='Hidden'" class="label-status other">{{item.isStatus}}</label>
           </div>
           <div class="col-6">
             <label class="switch" (click)="$event.stopPropagation()">
@@ -69,7 +90,6 @@
       <div class="card-container-mob" *ngIf="activeTab === 'all'">
         <div *ngFor="let item of allActiveCatalogue" class="card">
           <div *ngIf="item.Image1">
-            <div [ngClass]="getBadgeClasses(item.isStatus)"></div>
             <img [src]="item.Image1" alt="Image 1">
           </div>
           <div class="card-body row">
@@ -77,10 +97,6 @@
               <h5>{{ item.ItemName }}</h5>
               <p>MRP: {{ item.MRP }}</p>
               <p>Selling Price: {{ item.SellingPrice }}</p>
-              <label *ngIf="item.isStatus=='Verified'" class="label-status success">{{item.isStatus}}</label>
-              <label *ngIf="item.isStatus=='Pending'" class="label-status warning">{{item.isStatus}}</label>
-              <label *ngIf="item.isStatus=='Rejected'" class="label-status danger">{{item.isStatus}}</label>
-              <label *ngIf="item.isStatus=='Hidden'" class="label-status other">{{item.isStatus}}</label>
             </div>
             <div class="col-6">
               <label class="switch">
@@ -95,7 +111,6 @@
       <div class="card-container-mob" *ngIf="activeTab === 'hidden'">
         <div *ngFor="let item of allDisabledCatalogue" class="card">
           <div *ngIf="item.Image1">
-            <div [ngClass]="getBadgeClasses(item.isStatus)"></div>
             <img [src]="item.Image1" alt="Image 1">
           </div>
           <div class="card-body row">
@@ -103,14 +118,10 @@
               <h5>{{ item.ItemName }}</h5>
               <p>MRP: {{ item.MRP }}</p>
               <p>Selling Price: {{ item.SellingPrice }}</p>
-              <label *ngIf="item.isStatus=='Verified'" class="label-status success">{{item.isStatus}}</label>
-              <label *ngIf="item.isStatus=='Pending'" class="label-status warning">{{item.isStatus}}</label>
-              <label *ngIf="item.isStatus=='Rejected'" class="label-status danger">{{item.isStatus}}</label>
-              <label *ngIf="item.isStatus=='Hidden'" class="label-status other">{{item.isStatus}}</label>
             </div>
             <div class="col-6">
               <label class="switch">
-                <input readonly disabled  type="checkbox" name="toggle{{ i }}" [(ngModel)]="item.isShown">
+                <input type="checkbox" name="toggle{{ i }}" [(ngModel)]="item.isShown">
                 <span class="slider"></span>
               </label>
             </div>
