@@ -14,6 +14,12 @@ export class CrudCatalogueComponent implements OnInit {
   image1: string | null = null;
   image2: string | null = null;
   image3: string | null = null;
+  itemName="";
+  description="";
+  link="";
+  mrp="";
+  isStatus="";
+  sellingprice="";
   selectedFile: File | null = null;
   imageUrl: string | null = null;
   currentFileUpload: FileUpload | null = null;
