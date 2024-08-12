@@ -30,106 +30,31 @@ export class CatalogueComponent implements OnInit {
   isStatus :  string ='Verified';
 
   ngOnInit() {
-    this.fetchBusinessCategories();
+    this.userMobile=localStorage.getItem('phone');
+    this.fetchBusinessCataloguebyMobile(this.userMobile);
   }
-//fetch all categories
-  async fetchBusinessCategories() {
-    const snapshot = await this.firebaseService.getBusinessCatalogs();
-    this.Allcatalogue = [];
-    snapshot?.docs?.forEach((student) => {
-      this.Allcatalogue.push({ ...student.data(), id: student.id });
-    });
+//fetch catalogues by phone
+
+  async fetchBusinessCataloguebyMobile(Mobile: string) {
+    
+    this.Allcatalogue = await this.firebaseService.getBusinessCatalog(Mobile);
     this.allActiveCatalogue = this.Allcatalogue.filter(catalog => catalog.isShown);
     this.allDisabledCatalogue = this.Allcatalogue.filter(catalog => !catalog.isShown);
+    console.log(this.Allcatalogue.length);
   }
-//edit Catalogue
-  async geteditCatalogue(Mobile: string, docId:string) {
-    this.currentDocId=docId;
-    this.isUpdating=true;
-    this.editCatalogDdetails = await this.firebaseService.getBusinessCatalog(Mobile);
-    this.bindDataToFields();
-  }
+//fetch all categories 
+  // async fetchBusinessCategories() {
+  //   const snapshot = await this.firebaseService.getBusinessCatalogs();
+  //   this.Allcatalogue = [];
+  //   snapshot?.docs?.forEach((student) => {
+  //     this.Allcatalogue.push({ ...student.data(), id: student.id });
+  //   });
+  //   this.allActiveCatalogue = this.Allcatalogue.filter(catalog => catalog.isShown);
+  //   this.allDisabledCatalogue = this.Allcatalogue.filter(catalog => !catalog.isShown);
+  //   // this.allActiveCatalogue = [];
+  //   // this.allDisabledCatalogue = [];
 
-  onSubmit(form: NgForm) {
-    this.markAllAsTouched(form);
-    if (form.valid) {
-      const businessCatlog = {
-        Image1: this.image1,
-        Image2: this.image2,
-        Image3: this.image3,
-      };
-      const catalogObj = form.value['catalogue'];
-      this.firebaseService.addBusinessCatalog(
-        businessCatlog.Image1,
-        businessCatlog.Image2,
-        businessCatlog.Image3,
-        catalogObj.ItemName,
-        catalogObj.Country,
-        catalogObj.Description,
-        catalogObj.Link,
-        catalogObj.MRP,
-        catalogObj.SellingPrice,
-        catalogObj.MobileNumber,
-        'Submitted',
-        true
-      ).then(
-        () => {
-          alert('Catalog submitted successfully');
-          this.fetchBusinessCategories();
-          this.catalogueForm.resetForm();
-          this.isUpdating = false;
-          this.currentDocId = null;
-        },
-        error => console.error('Error submitting catalog:', error)
-      );
-    } else if (!this.image1 && !this.image2 && !this.image3) {
-      alert('At least one image is required.');
-    } else {
-      this.markAllAsTouched(form);
-    }
-  }
-
-  markAllAsTouched(form: NgForm) {
-    if (form && form.controls) {
-      Object.keys(form.controls).forEach(key => {
-        const control = form.controls[key];
-        control.markAsTouched({ onlySelf: true });
-        if (control['controls']) { // Handle nested controls if any
-          this.markAllAsTouched(control as any);
-        }
-      });
-    }
-  }
-
-  async onFileSelected(event: any, fileNumber: number) {
-    const file: File = event.target.files[0];
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.imageUrl = e.target.result;
-      };
-      reader.readAsDataURL(file);
-
-      this.currentFileUpload = new FileUpload(file);
-
-      this.firebaseService.pushFileToStorage(this.currentFileUpload, "/business_catalog_images").subscribe({
-        next: downloadURL => {
-          if (fileNumber === 1) {
-            this.image1 = downloadURL;
-          } else if (fileNumber === 2) {
-            this.image2 = downloadURL;
-          } else {
-            this.image3 = downloadURL;
-          }
-          console.log('File uploaded successfully. Download URL:', downloadURL);
-        },
-        error: error => {
-          console.error('Error uploading file:', error);
-        }
-      });
-    }
-  }
+  // }
 
   setActiveTab(tab: string) {
     this.activeTab = tab;
@@ -162,7 +87,7 @@ export class CatalogueComponent implements OnInit {
  onToggleChange(item: any) {
   this.firebaseService.updateBusinessCatalogue(item.id, { isShown: item.isShown }).then(() => {
     console.log('Toggle state updated successfully');
-    this.fetchBusinessCategories();
+    this.fetchBusinessCataloguebyMobile(this.userMobile);
     this.isUpdating = false;
     this.currentDocId = null;
   }, error => {
@@ -173,8 +98,20 @@ export class CatalogueComponent implements OnInit {
  
 }
 navigateToCrud(mobile: string, id:string) {
-  this.router.navigate(['/crud-catalogue', mobile, id]);
+  this.router.navigate(['crud-catalogue', id]);
 }
+//applying styles for badges
+getBadgeClasses(status: string) {
+  return {
+    'badge': true,
+    'badge-pending': status === 'Pending',
+    'badge-rejected': status === 'Rejected',
+    'badge-hidden': status === 'Hidden',
+    'badge-verified': status === 'Verified'
+  };
+}
+
+
 }
   
 
