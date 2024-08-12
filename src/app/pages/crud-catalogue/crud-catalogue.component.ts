@@ -64,7 +64,7 @@ export class CrudCatalogueComponent implements OnInit {
   async geteditCatalogue(Mobile: string, docId:string) {
     this.currentDocId=docId;
     this.isUpdating=true;
-    this.editCatalogDdetails = await this.firebaseService.getBusinessCatalog(Mobile);
+    this.editCatalogDdetails = await this.firebaseService.getBusinessCatalogbyId(docId);
     this.bindDataToFields();
   }
   onSubmit(form: NgForm) {
