@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { initializeApp } from 'firebase/app';
-import { Firestore, getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, DocumentData, CollectionReference, onSnapshot, QuerySnapshot, query, where } from 'firebase/firestore'
+import { Firestore, getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, DocumentData, CollectionReference, onSnapshot, QuerySnapshot, query, where, documentId } from 'firebase/firestore'
 import { finalize, Observable, Subject } from 'rxjs';
 import { environment } from '../environments/environment';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
@@ -18,7 +18,7 @@ export class FirebaseService {
   studentCol: CollectionReference<DocumentData>;
   businessCategoryCol: CollectionReference<DocumentData>;
   catlogCol: CollectionReference<DocumentData>;
-
+  registerBusiness : CollectionReference<DocumentData>;
   private updatedSnapshot = new Subject<QuerySnapshot<DocumentData>>();
   obsr_UpdatedSnapshot = this.updatedSnapshot.asObservable();
   private basePath = '/uploads';
@@ -30,6 +30,7 @@ export class FirebaseService {
     this.studentCol = collection(this.db, 'students');
     this.businessCategoryCol = collection(this.db, 'businesscategories');
     this.catlogCol=collection(this.db,'BusinessCatalog');
+    this.registerBusiness = collection(this.db, 'RegisterBusiness');
     // Get Realtime Data
     onSnapshot(this.studentCol, (snapshot) => {
       this.updatedSnapshot.next(snapshot);
@@ -107,13 +108,13 @@ export class FirebaseService {
     return results;
 
   }
-  async getBusinessCatalogbyId(id:string) {
-    //const snapshot = await getDocs(this.catlogCol);
+  async getBusinessCatalogbyId(id: string) {
+   //const snapshot = await getDocs(this.catlogCol);
     //return snapshot;
     const catalogRef = collection(this.db, 'BusinessCatalog'); // Adjust the collection name as needed
 
     // Create a query with a filter
-    const q = query(catalogRef, where('id', '==', id));
+    const q =  query(catalogRef, where(documentId(), '==', id));//query(catalogRef, where('id', '==', id));
 
     // Fetch the filtered documents
     const snapshot = await getDocs(q);
@@ -122,7 +123,6 @@ export class FirebaseService {
     const results = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     
     return results;
-
   }
   async getBusinessCatalogs() {
     const snapshot = await getDocs(this.catlogCol);
@@ -142,7 +142,7 @@ export class FirebaseService {
     return;
   }
 
-  async addBusinessCatalog(Image1: string, Image2: string,Image3:string, ItemName:string, Country:string, Description:string, Link:string, MRP:string, SellingPrice:string, Mobile:string, isShown:boolean) {
+  async addBusinessCatalog(Image1: string, Image2: string,Image3:string, ItemName:string, Country:string, Description:string, Link:string, MRP:string, SellingPrice:string, Mobile:string, isStatus:string, isShown:boolean) {
     await addDoc(this.catlogCol, {
       Image1, 
       Image2,
@@ -154,6 +154,7 @@ export class FirebaseService {
       MRP,
       SellingPrice,
       Mobile,
+      isStatus,
       isShown
     })
     return;
@@ -172,6 +173,39 @@ export class FirebaseService {
   }
   async updateBusinessCatalogue(docId: string, updatedFields: { [key: string]: any }) {
     const docRef = doc(this.db, 'BusinessCatalog', docId);
+    await updateDoc(docRef, updatedFields)
+    return;
+  }
+
+  //  register business
+  async registerBusinessDetails(regDetails:{[key:string]:any}) {
+    await addDoc(this.registerBusiness, {
+...regDetails 
+    })
+    return;
+  }
+
+  // register details
+  async getRegisterCatalog(mobile:string) {
+    //const snapshot = await getDocs(this.catlogCol);
+    //return snapshot;
+    const catalogRef = collection(this.db, 'RegisterBusiness'); // Adjust the collection name as needed
+
+    // Create a query with a filter
+    const q = query(catalogRef, where('mobileNumber', '==', mobile));
+
+    // Fetch the filtered documents
+    const snapshot = await getDocs(q);
+
+    // Process the results as needed
+    const results = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    
+    return results;
+
+  }
+
+  async updateRegisterDetails(docId: string, updatedFields: { [key: string]: any }) {
+    const docRef = doc(this.db, 'RegisterBusiness', docId);
     await updateDoc(docRef, updatedFields)
     return;
   }

@@ -1,3 +1,143 @@
-<div class="header">
-  dashboard
-</div>
+<div class="text-center mb-3">
+    <!-- Avatar section -->
+    <div class="avatar-wrapper">
+      <div class="avatar rounded-circle overflow-hidden position-relative">
+        <!-- Avatar display -->
+        <img [src]="logoURL" class="img-fluid" alt="Avatar">
+        <ng-template #defaultAvatar>
+          <div class="default-avatar d-flex justify-content-center align-items-center text-secondary bg-light">
+            <span class="material-icons">Brand logo</span> <!-- Change to your preferred icon or text -->
+          </div>
+        </ng-template>
+        <!-- Avatar upload button -->
+        <div class="camera-icon">
+          <i class="fa fa-solid fa-camera"></i>
+        </div>
+        <input type="file" accept="image/*"
+          class="position-absolute top-0 start-0 translate-middle btn btn-sm btn-light">
+      </div>
+      
+    </div>
+    <div class="col-12" style="text-align: center;">
+      <span>Urban Rider Store</span><br>
+      <button type="button" (click)=editRegister(); class="btn btn-primary" style="padding: 4px;">Edit</button>
+    </div>
+    <div class="col-12" style="text-align: center;">
+      <div class="row">
+        <div class="col-lg-6 mt-4" style="display: flex;justify-content: space-between ;">
+            <label class="form-control-label" for="BusinessCategory">Business Category</label>
+           <span  class="">{{registerDetails[0]['businessCategory']}}</span>
+        </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 mt-4" style="display: flex;justify-content: space-between ;">
+          <label class="form-control-label" for="BusinessName">Business Name</label>
+         <span  class="">{{registerDetails[0]['businessName']}}</span>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-lg-6 mt-4" style="display: flex;justify-content: space-between ;">
+          <label class="form-control-label" for="BusinessDescription">Description</label>
+        <span  class="">{{registerDetails[0]['businessDescription']}}</span>
+      </div>
+    </div>  
+    <div class="row">
+      <div class="col-lg-6 mt-4" style="display: flex;justify-content: space-between ;">
+          <label class="form-control-label" for="Email">Email</label>
+        <span  class="">{{registerDetails[0]['email']}}</span>
+      </div>
+    </div>  
+
+    <div class="row">
+      <div class="col-lg-6 mt-4" style="display: flex;justify-content: space-between ;">
+          <label class="form-control-label" for="gstNumber">GST</label>
+        <span  class="">{{registerDetails[0]['gstNumber']}}</span>
+      </div>
+    </div>  
+    </div>
+    <div class="text-center m-3" style="display: flex;justify-content: left;">
+      <span><b>Store Timings</b></span>
+    </div>
+    
+    <!-- timings -->
+   <div>
+      <!-- monday -->
+      <div class="">
+          <div class="col-lg-6 m-4" style="display: flex;justify-content: space-between ;">
+            <label class="form-control-label" for="Monday">Mon</label>
+            <div *ngIf = "registerDetails[0]['mondayOpen']" class="text-left">
+              <span  class="">{{registerDetails[0]['mondayStartTime']}}</span> - <span>{{registerDetails[0]['mondayEndTime']}}</span>
+            </div>
+            <div *ngIf = "!registerDetails[0]['mondayOpen']" class="text-left">
+              <span  class="closed">Closed</span>
+            </div>
+         </div>
+       <!-- tuesday -->
+        <div class="col-lg-6 m-4" style="display: flex;justify-content: space-between ;">
+            <label class="form-control-label" for="Tuesday">Tue</label>
+            <div *ngIf = "registerDetails[0]['tuesdayOpen']"  class="text-left">
+              <span  class="">{{registerDetails[0]['tuesdayStartTime']}}</span> - <span>{{registerDetails[0]['tuesdayEndTime']}}</span>
+            </div>
+            <div *ngIf = "!registerDetails[0]['tuesdayOpen']"  class="text-left">
+              <span  class="closed">Closed</span>
+            </div>
+        </div>
+        <!-- wednesday -->
+        <div class="col-lg-6 m-4" style="display: flex;justify-content: space-between ;">
+          <label class="form-control-label" for="Wednesday">Wed</label>
+          <div *ngIf = "registerDetails[0]['wednesdayOpen']"  class="text-left">
+            <span  class="">{{registerDetails[0]['wednesdayStartTime']}}</span> - <span>{{registerDetails[0]['wednesdayEndTime']}}</span>
+          </div>
+          <div *ngIf = "!registerDetails[0]['wednesdayOpen']"  class="text-left">
+            <span  class="closed">Closed</span>
+          </div>
+      </div>
+        <!-- Thursday -->
+        <div class="col-lg-6 m-4" style="display: flex;justify-content: space-between ;">
+          <label class="form-control-label" for="Thursday">Wed</label>
+          <div *ngIf = "registerDetails[0]['thursdayOpen']">
+            <span  class="">{{registerDetails[0]['thursdayStartTime']}}</span> - <span>{{registerDetails[0]['thursdayEndTime']}}</span>
+          </div>
+          <div *ngIf = "!registerDetails[0]['thursdayOpen']">
+            <span  class="closed">Closed</span>
+          </div>
+      </div>
+      <!-- Friday -->
+      <div class="col-lg-6 m-4" style="display: flex;justify-content: space-between ;">
+        <label class="form-control-label" for="Friday">Thu</label>
+        <div *ngIf = "registerDetails[0]['fridayOpen']">
+          <span  class="">{{registerDetails[0]['fridayStartTime']}}</span> - <span>{{registerDetails[0]['fridayEndTime']}}</span>
+        </div>
+        <div *ngIf = "!registerDetails[0]['fridayOpen']">
+          <span  class="closed">Closed</span>
+        </div>
+      </div>
+      <!-- Saturday -->
+      <div class="col-lg-6 m-4" style="display: flex;justify-content: space-between ;">
+        <label class="form-control-label" for="Saturday">Sat</label>
+        <div *ngIf = "registerDetails[0]['saturdayOpen']">
+          <span  class="">{{registerDetails[0]['saturdayStartTime']}}</span> - <span>{{registerDetails[0]['saturdayEndTime']}}</span>
+        </div>
+        <div *ngIf = "!registerDetails[0]['saturdayOpen']">
+          <span  class="closed">Closed</span>
+        </div>
+      </div>
+        <!-- Sunday -->
+        <div class="col-lg-6 m-4" style="display: flex;justify-content: space-between ;">
+          <label class="form-control-label" for="Sunday">Sun</label>
+          <div *ngIf = "registerDetails[0]['sundayOpen']">
+            <span  class="">{{registerDetails[0]['sundayStartTime']}}</span> - <span>{{registerDetails[0]['sundayEndTime']}}</span>
+          </div>
+          <div *ngIf = "!registerDetails[0]['sundayOpen']">
+            <span  class="closed">Closed</span>
+          </div>
+        </div>
+        <!-- Sunday -->
+        <div class="col-lg-6 m-4" style="display: flex;justify-content: space-between ;">
+          <label class="form-control-label" for="Location">Business Location (shop/warehouse)</label>
+          <span  class="">Hyderabad</span>
+        </div>
+      </div> 
+    </div>
+    <!-- End Avatar section -->
+  </div>

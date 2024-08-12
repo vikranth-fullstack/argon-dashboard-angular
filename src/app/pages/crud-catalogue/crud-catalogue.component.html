@@ -1,0 +1,336 @@
+
+
+<div class="seperate">
+  <div class="p-lg-4 container">
+    <div class="arrow-icon">
+      <span style="width: 10%;" (click)="navigateToCatalogue()"><i class="fa fa-arrow-left"></i></span>
+    </div>
+    <div class="text-center">
+      <h2>Add Item</h2>
+    </div>
+  
+    <div id="productImages" class="my-4">
+      <div class="text-left">
+        <h2>Add Product Images</h2>
+      </div>
+      <div class="image-gallery">
+        <!-- First image upload -->
+        <div class="avatar-wrapper">
+          <div class="avatar square overflow-hidden position-relative">
+            <!-- Avatar display -->
+            <img *ngIf="image1; else defaultAvatar1" [src]="image1" class="img-fluid" alt="Product Image 1" >
+            <ng-template #defaultAvatar1>
+              <div class="default-avatar">
+                <span class="material-icons">Add Image</span>
+              </div>
+            </ng-template>
+            <!-- Avatar upload button -->
+            <div class="camera-icon">
+              <i class="fa fa-solid fa-camera"></i>
+            </div>
+            <input type="file" (change)="onFileSelected($event, 1)" accept="image/*"
+              class="file-input" id="fileInput1">
+          </div>
+          
+        </div>
+  
+        <!-- Second image upload -->
+        <div class="avatar-wrapper">
+          <div class="avatar square overflow-hidden position-relative">
+            <!-- Avatar display -->
+            <img *ngIf="image2; else defaultAvatar2" [src]="image2" class="img-fluid" alt="Product Image 2">
+            <ng-template #defaultAvatar2>
+              <div class="default-avatar">
+                <span class="material-icons">Add Image</span>
+              </div>
+            </ng-template>
+            <!-- Avatar upload button -->
+            <div class="camera-icon">
+              <i class="fa fa-solid fa-camera"></i>
+            </div>
+            <input type="file" (change)="onFileSelected($event, 2)" accept="image/*"
+              class="file-input" id="fileInput2">
+          </div>
+          
+        </div>
+  
+        <!-- Third image upload -->
+        <div class="avatar-wrapper">
+          <div class="avatar square overflow-hidden position-relative">
+            <!-- Avatar display -->
+            <img *ngIf="image3; else defaultAvatar3" [src]="image3" class="img-fluid" alt="Product Image 3">
+            <ng-template #defaultAvatar3>
+              <div class="default-avatar">
+                <span class="material-icons">Add Image</span>
+              </div>
+            </ng-template>
+            <!-- Avatar upload button -->
+            <div class="camera-icon">
+              <i class="fa fa-solid fa-camera"></i>
+            </div>
+            <input type="file" (change)="onFileSelected($event, 3)" accept="image/*"
+              class="file-input" id="fileInput3">
+          </div>
+          
+        </div>
+      </div>
+      <!-- End Avatar section -->
+      
+      <div *ngIf="!image1 && !image2 && !image3" style="color: red;">
+        At least one image is required.
+      </div>
+      
+      <div>
+        <form #catalogueForm="ngForm" (ngSubmit)="onSubmit(catalogueForm)">
+          <div ngModelGroup="catalogue" #catalogueGroup="ngModelGroup">
+            <div class="text-left mt-4">
+              <h2>Product Info</h2>
+            </div>
+            <div class="row">
+              <!-- Item Name -->
+              <div class="col-lg-6 mt-4">
+                <label class="form-control-label" for="catalogueItemName">Item Name<span style="color: red;">*</span></label>
+                <input type="text" id="catalogueItemName" class="form-control form-control-alternative"
+                  placeholder="Item Name" name="ItemName"  [(ngModel)]="itemName" #ItemName="ngModel" required>
+                <div style="color: red;" *ngIf="ItemName.touched && ItemName.errors?.required">
+                  Item Name is Required
+                </div>
+              </div>
+  
+              <!-- Country -->
+              <div class="col-lg-6 mt-4">
+                <label class="form-control-label" for="catalogueCountry">Country<span style="color: red;">*</span></label>
+                <input type="text" id="catalogueCountry" class="form-control form-control-alternative"
+                  placeholder="Country" name="Country" [(ngModel)]="country" #Country="ngModel" required>
+                <div style="color: red;" *ngIf="Country.touched && Country.errors?.required">
+                  Country is Required
+                </div>
+              </div>
+            </div>
+  
+            <div class="row mt-4">
+              <!-- Description -->
+              <div class="col-lg-6 mt-4">
+                <label class="form-control-label" for="catalogueDescription">Description<span style="color: red;">*</span></label>
+                <input type="text" id="catalogueDescription" class="form-control form-control-alternative"
+                  placeholder="Description" name="Description" [(ngModel)]="description" #Description="ngModel" required>
+                <div style="color: red;" *ngIf="Description.touched && Description.errors?.required">
+                  Description is Required
+                </div>
+              </div>
+  
+              <!-- Link -->
+              <div class="col-lg-6 mt-4">
+                <label class="form-control-label" for="catalogueLink">Link<span style="color: red;">*</span></label>
+                <input type="text" id="catalogueLink" class="form-control form-control-alternative"
+                  placeholder="Link" name="Link" [(ngModel)]="link" #Link="ngModel" required>
+                <div style="color: red;" *ngIf="Link.touched && Link.errors?.required">
+                  Link is Required
+                </div>
+              </div>
+            </div>
+            
+            <div class="mt-4">
+              <h2>Price Info</h2>
+            </div>
+            <div class="row">
+              <!-- MRP/Retail Price -->
+              <div class="col-lg-6 mt-4">
+                <label class="form-control-label" for="catalogueMRP">MRP/Retail Price<span style="color: red;">*</span></label>
+                <input type="text" id="catalogueMRP" class="form-control form-control-alternative"
+                  placeholder="₹ MRP/Retail Price" name="MRP" [(ngModel)]="mrp" #MRP="ngModel" required>
+                <div style="color: red;" *ngIf="MRP.touched && MRP.errors?.required">
+                  MRP/Retail Price is Required
+                </div>
+              </div>
+  
+              <!-- Selling Price in GEM -->
+              <div class="col-lg-6 mt-4">
+                <label class="form-control-label" for="catalogueSellingPrice">Selling Price in GEM<span style="color: red;">*</span></label>
+                <input type="text" id="catalogueSellingPrice" class="form-control form-control-alternative"
+                  placeholder="₹ Selling Price in GEM" name="SellingPrice" [(ngModel)]="sellingprice" #SellingPrice="ngModel" required>
+                <div style="color: red;" *ngIf="SellingPrice.touched && SellingPrice.errors?.required">
+                  Selling Price in GEM is Required
+                </div>
+              </div>
+               <!-- catalogueMobileNumber -->
+            <div class="col-lg-6 mt-4">
+              <label class="form-control-label" for="catalogueMobileNumber">Mobile Number<span style="color: red;">*</span></label>
+              <input type="text" id="catalogueMobileNumber" class="form-control form-control-alternative"
+               minlength="10" placeholder="Mobile Number" name="MobileNumber" [(ngModel)]="mobile" #MobileNumber="ngModel" required>
+              <div style="color: red;" *ngIf="MobileNumber.touched && MobileNumber.errors?.required">
+                Mobile Number is Required
+              </div>
+            </div>
+
+            <div class="col-lg-6 mt-4" style="display: block;">
+              <label class="form-control-label" for="catalogueStatus">Status</label>
+              <input  type="text" id="catalogueStatus" class="form-control form-control-alternative"
+                placeholder="Status" name="Status" [(ngModel)]="isStatus" #Cataloguestatus="ngModel" required>
+            </div>
+
+            </div>
+  
+            <div class="row">
+              <div class="col-lg-12 mt-4">
+                <div class="form-group">
+                  <button type="submit" *ngIf="!isUpdating" class="btn btn-primary mt-4">Submit</button>
+                  <button type="button" class="btn btn-primary mt-4" (click)="updateCatalogue(catalogueForm)" *ngIf="isUpdating">Update</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+</div>
+<div class="mobile-border">
+  <div class="p-lg-4 container-mob">
+    <div class="arrow-icon">
+      <span style="width: 10%;"><i class="fa fa-arrow-left"></i></span>
+    </div>
+    <div class="text-center">
+      <h2>Add Item</h2>
+    </div>
+  
+    <div id="productImages" class="my-4 ">
+      <div class="text-left">
+        <h2>Add Product Images</h2>
+      </div>
+      <div class="image-gallery">
+        <!-- First image upload -->
+        <div class="avatar-wrapper">
+          <div class="avatar square overflow-hidden position-relative">
+            <!-- Avatar display -->
+            <img *ngIf="image1; else defaultAvatar1" [src]="image1" class="img-fluid" alt="Product Image 1" >
+            <ng-template #defaultAvatar1>
+              <div class="default-avatar">
+                <span class="material-icons">Add Image</span>
+              </div>
+            </ng-template>
+            <!-- Avatar upload button -->
+            <div class="camera-icon">
+              <i class="fa fa-solid fa-camera"></i>
+            </div>
+            <input type="file" disabled accept="image/*"
+              class="file-input" id="fileInput1">
+          </div>
+          
+        </div>
+  
+        <!-- Second image upload -->
+        <div class="avatar-wrapper">
+          <div class="avatar square overflow-hidden position-relative">
+            <!-- Avatar display -->
+            <img *ngIf="image2; else defaultAvatar2"  alt="Product Image 2">
+            <ng-template #defaultAvatar2>
+              <div class="default-avatar">
+                <span class="material-icons">Add Image</span>
+              </div>
+            </ng-template>
+            <!-- Avatar upload button -->
+            <div class="camera-icon">
+              <i class="fa fa-solid fa-camera"></i>
+            </div>
+            <input type="file" disabled accept="image/*"
+              class="file-input" id="fileInput2">
+          </div>
+          
+        </div>
+  
+        <!-- Third image upload -->
+        <div class="avatar-wrapper">
+          <div class="avatar square overflow-hidden position-relative">
+            <!-- Avatar display -->
+            <img *ngIf="image3; else defaultAvatar3" [src]="image3" class="img-fluid" alt="Product Image 3">
+            <ng-template #defaultAvatar3>
+              <div class="default-avatar">
+                <span class="material-icons">Add Image</span>
+              </div>
+            </ng-template>
+            <!-- Avatar upload button -->
+            <div class="camera-icon">
+              <i class="fa fa-solid fa-camera"></i>
+            </div>
+            <input type="file"  disabled accept="image/*"
+              class="file-input" id="fileInput3">
+          </div>
+          
+        </div>
+      </div>
+      <!-- End Avatar section -->
+      
+      <div>
+        <form>
+          <div ngModelGroup="catalogue" #catalogueGroup="ngModelGroup">
+            <div class="text-left mt-4">
+              <h2>Product Info</h2>
+            </div>
+            <div class="row">
+              <!-- Item Name -->
+              <div class="col-lg-6 mt-4">
+                <label class="form-control-label" for="catalogueItemName">Item Name<span style="color: red;">*</span></label>
+                <span  class="form-control form-control-alternative">{{itemName}}</span>
+              </div>
+  
+              <!-- Country -->
+              <div class="col-lg-6 mt-4">
+                <label class="form-control-label" for="catalogueCountry">Country<span style="color: red;">*</span></label>
+                  <span  class="form-control form-control-alternative">{{country}}</span>
+              </div>
+            </div>
+  
+            <div class="row mt-4">
+              <!-- Description -->
+              <div class="col-lg-6 mt-4">
+                <label class="form-control-label" for="catalogueDescription">Description<span style="color: red;">*</span></label>
+                <span  class="form-control form-control-alternative">{{description}}</span>
+              </div>
+  
+              <!-- Link -->
+              <div class="col-lg-6 mt-4">
+                <label class="form-control-label" for="catalogueLink">Link<span style="color: red;">*</span></label>
+                <span  class="form-control form-control-alternative">{{link}}</span>
+              </div>
+            </div>
+            
+            <div class="mt-4">
+              <h2>Price Info</h2>
+            </div>
+            <div class="row">
+              <!-- MRP/Retail Price -->
+              <div class="col-lg-6 mt-4">
+                <label class="form-control-label" for="catalogueMRP">MRP/Retail Price<span style="color: red;">*</span></label>
+                <span  class="form-control form-control-alternative">{{mrp}}</span>
+              </div>
+  
+              <!-- Selling Price in GEM -->
+              <div class="col-lg-6 mt-4">
+                <label class="form-control-label" for="catalogueSellingPrice">Selling Price in GEM<span style="color: red;">*</span></label>
+                <span  class="form-control form-control-alternative">{{sellingprice}}</span>
+              </div>
+               <!-- catalogueMobileNumber -->
+            <div class="col-lg-6 mt-4">
+              <label class="form-control-label" for="catalogueMobileNumber">Mobile Number<span style="color: red;">*</span></label>
+             <span  class="form-control form-control-alternative">{{mobile}}</span>
+            </div>
+            </div>
+  
+            <div class="row">
+              <div class="col-lg-12 mt-4">
+                <div class="form-group">
+                  <button type="submit" *ngIf="!isUpdating" class="btn btn-primary mt-4">Submit</button>
+                  <button type="button" class="btn btn-primary mt-4"  *ngIf="isUpdating">Update</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+

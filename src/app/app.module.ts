@@ -19,6 +19,7 @@ import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { environment } from '../environments/environment';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
+import { CrudCatalogueComponent } from './pages/crud-catalogue/crud-catalogue.component';
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    AuthLayoutComponent
+    AuthLayoutComponent,
+    CrudCatalogueComponent
   ],
   providers: [{ provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig }],
   bootstrap: [AppComponent],
