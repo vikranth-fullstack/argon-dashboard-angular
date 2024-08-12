@@ -26,7 +26,7 @@ export class CatalogueComponent implements OnInit {
   isUpdating = false;
   currentDocId: string | null = null;
   userMobile:string=null;
-  constructor(private firebaseService: FirebaseService, private router: Router, private router: Router) { }
+  constructor(private firebaseService: FirebaseService, private router: Router) { }
   isStatus :  string ='Verified';
 
   ngOnInit() {
@@ -70,6 +70,7 @@ export class CatalogueComponent implements OnInit {
         catalogObj.MRP,
         catalogObj.SellingPrice,
         catalogObj.MobileNumber,
+        'Submitted',
         true
       ).then(
         () => {
